@@ -18,9 +18,7 @@
         <nav class="nav has-shadow">
             <div class="container">
               <div class="nav-left">
-                <a href="{{route('home')}}" class="nav-item"><img src="{{asset('images/findyourbreederlogo.png')}}" alt="Find Your Breeder Logo">
-                  Find Your Breeder
-                </a>
+                <a href="{{route('home')}}" class="nav-item"><img src="{{asset('images/findyourbreederlogo.png')}}" alt="Find Your Breeder Logo"></a>
                 <a href="" class="nav-item is-tab is-hidden-mobile m-l-10">Find A Breeder</a>
                 <a href="" class="nav-item is-tab is-hidden-mobile">News &amp; Information</a>
               </div>
