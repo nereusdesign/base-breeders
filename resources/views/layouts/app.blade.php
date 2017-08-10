@@ -25,9 +25,9 @@
                 <a href="" class="nav-item is-tab is-hidden-mobile">News &amp; Information</a>
               </div>
               <div class="nav-right overflow-visible">
-                @if(!Auth::guest())
-                  <a href="" class="nav-item is-tab">Login</a>
-                  <a href="" class="nav-item is-tab">Join</a>
+                @if(Auth::guest())
+                  <a href="{{ route('login') }}" class="nav-item is-tab">Login</a>
+                  <a href="{{ route('register') }}" class="nav-item is-tab">Join</a>
                 @else
                   <button class="dropdown is-aligned-right nav-item">
                     Hey You <span class="icon"><i class="fa fa-caret-down"></i></span>
