@@ -1,46 +1,14 @@
-//Override Bulma is-tab to be allowed on buttons as well as anchor tabs
-button.nav-item {
-  background-color: transparent;
-  border: none;
-  color: $text-light;
+html,body{
+  height:100%;
+}
+/* ========================================
+   ============ Text Overrides ===========
+   ======================================== */
 
-  &:hover {
-    color: $link-hover;
-  }
-
-  // Modifiers
-  &.is-active {
-    color: $link-active;
-  }
-
-  &.is-tab {
-    border-bottom: 1px solid transparent;
-    border-top: 1px solid transparent;
-    padding-bottom: calc(0.75rem - 1px);
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: calc(0.75rem - 1px);
-  }
-
-  &:hover {
-    border-bottom-color: $primary;
-    border-top-color: transparent;
-  }
-
-  &.is-active {
-    border-bottom: 3px solid $primary;
-    color: $primary;
-    padding-bottom: calc(0.75rem - 3px);
-  }
+.is-muted {
+  color: $grey-light !important;
 }
 
-
-//override bulma logo image height, and nav bar height
-
-.nav-item img {
-  max-height: 2.8rem;
-}
-
-.nav {
-  height: 4.5rem;
+a.is-muted:hover{
+  color: $grey !important;
 }

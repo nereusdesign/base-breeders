@@ -13580,46 +13580,21 @@ label.panel-block:hover {
   transition: opacity 86ms ease-out, visibility 86ms ease-out;
 }
 
-button.nav-item {
-  background-color: transparent;
-  border: none;
-  color: #7a7a7a;
+html,
+body {
+  height: 100%;
 }
 
-button.nav-item:hover {
-  color: #363636;
+/* ========================================
+   ============ Text Overrides ===========
+   ======================================== */
+
+.is-muted {
+  color: #b5b5b5 !important;
 }
 
-button.nav-item.is-active {
-  color: #363636;
-}
-
-button.nav-item.is-tab {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  padding-bottom: calc(0.75rem - 1px);
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: calc(0.75rem - 1px);
-}
-
-button.nav-item:hover {
-  border-bottom-color: #00d1b2;
-  border-top-color: transparent;
-}
-
-button.nav-item.is-active {
-  border-bottom: 3px solid #00d1b2;
-  color: #00d1b2;
-  padding-bottom: calc(0.75rem - 3px);
-}
-
-.nav-item img {
-  max-height: 2.8rem;
-}
-
-.nav {
-  height: 4.5rem;
+a.is-muted:hover {
+  color: #7a7a7a !important;
 }
 
 .m-t-5 {
@@ -14102,48 +14077,11 @@ button.nav-item.is-active {
   padding-right: 100px;
 }
 
-.overflow-visible {
-  overflow: visible;
-}
-
-.dropdown {
-  position: relative;
-}
-
-.dropdown .dropdown-menu {
-  display: none;
-  position: absolute;
-  left: 0;
-  top: 102%;
-  z-index: 1000;
+.side-menu {
+  position: fixed;
+  height: 100vh;
+  width: 200px;
   background-color: white;
-  min-width: 200px;
-  text-align: left;
-  -webkit-box-shadow: 0 0 1px rgba(57, 70, 78, 0.15), 0 20px 55px -8px rgba(57, 70, 78, 0.25);
-          box-shadow: 0 0 1px rgba(57, 70, 78, 0.15), 0 20px 55px -8px rgba(57, 70, 78, 0.25);
-}
-
-.dropdown .dropdown-menu li.seperator {
-  border-top: 1px solid #efefef;
-  margin: 5px 0;
-}
-
-.dropdown .dropdown-menu li > a {
-  margin: 5px 0px;
-  padding: 5px 0 5px 13px;
-  display: block;
-}
-
-.dropdown .dropdown-menu li > a:hover {
-  background-color: whitesmoke;
-}
-
-.dropdown.is-aligned-right .dropdown-menu {
-  right: 0;
-  left: auto;
-}
-
-.dropdown.is-open .dropdown-menu {
-  display: block;
+  overflow-y: scroll;
 }
 
