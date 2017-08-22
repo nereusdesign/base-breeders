@@ -75,6 +75,10 @@
                   Account Settings
                 </a>
                 <hr class="navbar-divider">
+                <a class="navbar-item" href="manage/dashboard">
+                  Admin Options
+                </a>
+                <hr class="navbar-divider">
                 <a class="navbar-item" href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                   Logout
                 </a>
