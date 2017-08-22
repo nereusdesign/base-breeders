@@ -38,7 +38,37 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+          'name' => 'required|max:255',
+          'email' => 'required|email|unique:users'
+        ]);
+
+        if (!empty($request->password)) {
+          $password = trim($request->password);
+        } else {
+          # set the manual password
+          $length = 10;
+          $keyspace = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+          $str = '';
+          $max = mb_strlen($keyspace, '8bit') - 1;
+          for ($i = 0; $i < $length; ++$i) {
+              $str .= $keyspace[random_int(0, $max)];
+          }
+          $password = $str;
+        }
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($password);
+
+        if ($user->save()) {
+          return redirect()->route('users.show', $user->id);
+        } else {
+          Session::flash('danger', 'Sorry a problem occurred while creating this user.');
+          return redirect()->route('users.create');
+        }
+
     }
 
     /**
@@ -49,7 +79,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+      $user = User::findOrFail($id);
+      return view("manage.users.show")->withUser($user);
     }
 
     /**
@@ -60,7 +91,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+      $user = User::findOrFail($id);
+      return view("manage.users.edit")->withUser($user);
     }
 
     /**
@@ -72,7 +104,33 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+          $this->validate($request, [
+          'name' => 'required|max:255',
+          'email' => 'required|email|unique:users,email,'.$id
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password_options == 'auto') {
+          $length = 10;
+          $keyspace = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+          $str = '';
+          $max = mb_strlen($keyspace, '8bit') - 1;
+          for ($i = 0; $i < $length; ++$i) {
+              $str .= $keyspace[random_int(0, $max)];
+          }
+          $user->password = Hash::make($str);
+        } elseif ($request->password_options == 'manual') {
+          $user->password = Hash::make($request->password);
+        }
+
+        if ($user->save()) {
+          return redirect()->route('users.show', $id);
+        } else {
+          Session::flash('error', 'There was a problem saving the updated user info to the database. Try again later.');
+          return redirect()->route('users.edit', $id);
+        }
     }
 
     /**
