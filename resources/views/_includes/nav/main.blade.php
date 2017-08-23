@@ -13,32 +13,32 @@
   <div id="navMenubd-example" class="navbar-menu">
     <div class="navbar-start">
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link  is-active" href="/documentation/overview/start/">
+        <a class="navbar-link  is-active" href="#">
           Find A Breeder
         </a>
         <div class="navbar-dropdown ">
-          <a class="navbar-item " href="/documentation/overview/start/">
+          <a class="navbar-item " href="{{route('find-dog-breeder')}}">
             Find A Dog Breeder
           </a>
-          <a class="navbar-item " href="http://bulma.io/documentation/modifiers/syntax/">
+          <a class="navbar-item " href="{{route('find-cat-breeder')}}">
             Find A Cat Breeder
           </a>
         </div>
       </div>
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link " href="http://bulma.io/blog/">
+        <a class="navbar-link " href="#">
           News &amp; Information
         </a>
         <div id="blogDropdown" class="navbar-dropdown " data-style="width: 18rem;">
 
-            <a class="navbar-item" href="/2017/08/03/list-of-tags/">
+            <a class="navbar-item" href="{{route('dog-breeds')}}">
               Learn About Dog Breeds
             </a>
-          <a class="navbar-item" href="">
-            Learn About Cat Breeds
-          </a>
+            <a class="navbar-item" href="{{route('cat-breeds')}}">
+              Learn About Cat Breeds
+            </a>
           <hr class="navbar-divider">
-          <a class="navbar-item" href="">
+          <a class="navbar-item" href="{{route('dog-and-cat-news')}}">
             News &amp; Updates
           </a>
         </div>
