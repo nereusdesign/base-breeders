@@ -14077,6 +14077,10 @@ a.is-muted:hover {
   padding-right: 100px;
 }
 
+.is-fullwidth {
+  width: 100%;
+}
+
 .side-menu {
   position: absolute;
   top: 3.25rem;
