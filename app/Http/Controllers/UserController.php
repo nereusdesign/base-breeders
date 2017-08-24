@@ -122,8 +122,11 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
       }
       $user->save();
-      $user->syncRoles(explode(',', $request->roles));
-
+      if ($request->roles) {
+        $user->syncRoles(explode(',', $request->roles));
+      } else {
+       $user->detachRoles($user->roles);
+      }﻿
       return redirect()->route('users.show', $id);
       // if () {
       //   return redirect()->route('users.show', $id);
