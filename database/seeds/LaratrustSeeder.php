@@ -14,7 +14,7 @@ class LaratrustSeeder extends Seeder
     {
         $this->command->info('Truncating User, Role and Permission tables');
         $this->truncateLaratrustTables();
-        
+
         $config = config('laratrust_seeder.role_structure');
         $userPermission = config('laratrust_seeder.permission_structure');
         $mapPermission = collect(config('laratrust_seeder.permissions_map'));
@@ -43,7 +43,7 @@ class LaratrustSeeder extends Seeder
                     ]);
 
                     $this->command->info('Creating Permission to '.$permissionValue.' for '. $module);
-                    
+
                     if (!$role->hasPermission($permission->name)) {
                         $role->attachPermission($permission);
                     } else {
@@ -57,7 +57,8 @@ class LaratrustSeeder extends Seeder
             $user = \App\User::create([
                 'name' => ucwords(str_replace("_", " ", $key)),
                 'email' => $key.'@app.com',
-                'password' => bcrypt('password')
+                'password' => bcrypt('password'),
+                'randomKey' => md5(microtime().rand(0,99999));
             ]);
             $user->attachRole($role);
         }
@@ -73,6 +74,7 @@ class LaratrustSeeder extends Seeder
                         'email' => $key.'@app.com',
                         'password' => bcrypt('password'),
                         'remember_token' => str_random(10),
+                        'randomKey' => md5(microtime().rand(0,99999));
                     ]);
                     foreach ($permissions as $p => $perm) {
                         $permissionValue = $mapPermission->get($perm);
@@ -84,7 +86,7 @@ class LaratrustSeeder extends Seeder
                         ]);
 
                         $this->command->info('Creating Permission to '.$permissionValue.' for '. $module);
-                        
+
                         if (!$user->hasPermission($permission->name)) {
                             $user->attachPermission($permission);
                         } else {
