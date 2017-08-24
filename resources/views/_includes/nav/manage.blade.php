@@ -8,7 +8,7 @@
     </ul>
 
     <p class="menu-label">
-      Administration
+      User/Permission Administration
     </p>
     <ul class="menu-list">
       <li><a href="{{route('users.index')}}">Manage Users</a></li>
@@ -20,5 +20,22 @@
         </ul>
       </li>
     </ul>
+
+
+    <p class="menu-label">
+      Site Administration
+    </p>
+    <ul class="menu-list">
+      <li><a href="{{route('breeds.edit')}}">Edit Breed Information</a></li>
+      <li>
+        <a href="{{route('breeds.index')}}">Breed Information</a>
+        <ul>
+          <li><a href="{{route('breeds.add')}}">Add New Breed</a></li>
+          <li><a href="{{route('breeds.delete')}}">Delete A Breed</a></li>
+        </ul>
+      </li>
+    </ul>
+
+
   </aside>
 </div>

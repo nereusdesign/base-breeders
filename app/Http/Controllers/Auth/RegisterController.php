@@ -66,6 +66,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'randomKey' => md5(microtime().rand(0,99999));
         ]);
     }
 }
