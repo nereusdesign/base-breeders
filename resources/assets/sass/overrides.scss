@@ -12,3 +12,27 @@ html,body{
 a.is-muted:hover{
   color: $grey !important;
 }
+
+.button.is-primary{
+    background-color: #44bde9 !important;
+}
+
+.display-none{
+  display:none !important;
+}
+
+.no-border{
+  border:0 !important;
+}
+
+.invisible-border{
+  border-color:transparent !important;
+}
+
+.no-hover {
+    &:hover {
+        color:inherit !important;
+        background-color:inherit !important;
+        cursor:default;
+    }
+}

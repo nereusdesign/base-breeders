@@ -44,22 +44,15 @@ Route::get('find-cat-breeder', function () {
     return view('find-cat-breeders');
 })->name('find-cat-breeder');
 
-Route::get('dog-breeds', function () {
-    return view('dog-breeds');
-})->name('dog-breeds');
-
-Route::get('cat-breeds', function () {
-    return view('cat-breeds');
-})->name('cat-breeds');
 
 Route::get('dog-and-cat-news', function () {
     return view('dog-and-cat-news');
 })->name('dog-and-cat-news');
 
-Route::get('view-breeds', function () {
-    return view('view-breeds');
-})->name('view-breeds');
 
+Route::get('dog-breeds', 'BreedsController@viewDogs')->name('dog-breeds');
+Route::get('cat-breeds', 'BreedsController@viewCats')->name('cat-breeds');
+Route::get('view-breeds', 'BreedsController@view')->name('view-breeds');
 
 Route::prefix('manage')->middleware('role:superadministrator|administrator')->group(function () {
   Route::get('/', 'ManageController@index');
@@ -76,6 +69,9 @@ Route::prefix('breeds')->group(function () {
   Route::get('/add','BreedsController@add')->name('breeds.add');
   Route::get('/delete','BreedsController@delete')->name('breeds.delete');
 });
+
+Route::get('breed-info/{url}', ['as' => 'breed-info','uses' =>'BreedsController@listing']);
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 

@@ -16,7 +16,6 @@ class CreateBreedsTable extends Migration
         Schema::create('breeds', function (Blueprint $table) {
             $table->increments('id');
             $table->string('breedType',3)->default('dog');
-            $table->string('pureMixed');
             $table->string('originLocation');
             $table->string('breedName');
             $table->string('otherNames')->nullable();
@@ -40,7 +39,7 @@ class CreateBreedsTable extends Migration
             $table->text('overview');
             $table->text('history');
             $table->text('personality');
-            $table->text('description');                    
+            $table->text('description');
 //state dog only values
             $table->integer('stars_apartment')->unsigned()->default('0');
             $table->text('apartment');
@@ -50,6 +49,7 @@ class CreateBreedsTable extends Migration
             $table->text('exercise');
             $table->integer('stars_training')->unsigned()->default('0');
             $table->text('training');
+            $table->string('pureMixed');
 //end dog only values
 //start cat only values
             $table->integer('stars_affectionate')->unsigned()->default('0');
