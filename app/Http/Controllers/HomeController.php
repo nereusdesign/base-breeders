@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 class HomeController extends Controller
 {
     /**
@@ -13,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+      //  $this->middleware('auth');
     }
 
     /**
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $folder_path = public_path()."/images/static/"; // in my test case it's under /public folder
+        $files = preg_grep('~\.(jpeg|jpg|png)$~', scandir($folder_path));
+        $randomFile = $files[array_rand($files)];
+        return view('home',['mainimage' => $randomFile]);
     }
 }

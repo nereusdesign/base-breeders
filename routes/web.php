@@ -34,7 +34,9 @@ Auth::routes();
 /$this->post('password/reset', 'Auth\ResetPasswordController@reset');
 */
 
-
+Route::get('find-breeder', function () {
+    return view('find-breeders');
+})->name('find-breeder');
 
 Route::get('find-dog-breeder', function () {
     return view('find-dog-breeders');
@@ -60,6 +62,26 @@ Route::prefix('manage')->middleware('role:superadministrator|administrator')->gr
   Route::resource('/users','UserController');
   Route::resource('/permissions', 'PermissionController', ['except' => 'destroy']);
   Route::resource('/roles', 'RoleController', ['except' => 'destroy']);
+  Route::prefix('breeders')->group(function () {
+      Route::get('/dashboard','ManageController@breedersDashboard')->name('manage.breeders.dashboard');
+      Route::get('/view','ManageController@breedersView')->name('manage.breeders.view');
+      Route::get('/add','ManageController@breedersAdd')->name('manage.breeders.add');
+      Route::get('/','ManageController@breedersIndex');
+  });
+});
+
+Route::prefix('editor')->middleware('role:superadministrator|administrator|editor')->group(function () {
+  Route::get('/', 'EditorController@index');
+  Route::get('/view','EditorController@view')->name('editor.view');
+  Route::get('/add','EditorController@add')->name('editor.add');
+  Route::get('/remove','EditorController@remove')->name('editor.remove');
+  Route::get('/feed','EditorController@feed')->name('editor.feed');
+});
+
+Route::prefix('hero')->middleware('role:superadministrator|administrator')->group(function () {
+  Route::get('/', 'HeroController@index');
+  Route::get('/add','HeroController@add')->name('hero.add');
+  Route::get('/remove','HeroController@remove')->name('hero.remove');
 });
 
 Route::prefix('breeds')->group(function () {

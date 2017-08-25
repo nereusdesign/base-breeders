@@ -2,6 +2,6 @@
 
 @section('content')
 
-<h1>Dog breed info</h1>
+<h1>Find Breeders</h1>
 
 @endsection

@@ -7,8 +7,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title','Find Your Breeder')</title>
+    <meta name="description" content="@yield('desc','Find a dog or cat breeder near you. Browse our free directory of dog and cat breeders or view pictures and get information about dog and cat breeds for free.')">
 
-    <title>Find Your Breeder</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -22,5 +23,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>
