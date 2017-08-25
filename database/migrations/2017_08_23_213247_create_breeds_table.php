@@ -15,7 +15,9 @@ class CreateBreedsTable extends Migration
     {
         Schema::create('breeds', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('breedType',3);
+            $table->string('breedType',3)->default('dog');
+            $table->string('pureMixed');
+            $table->string('originLocation');
             $table->string('breedName');
             $table->string('otherNames')->nullable();
             $table->string('picture')->nullable();
@@ -25,39 +27,42 @@ class CreateBreedsTable extends Migration
             $table->string('height');
             $table->string('weight');
             $table->text('colorsList');
-            $table->integer('stars_child')->unsigned()->default('5');
+            $table->integer('stars_child')->unsigned()->default('0');
             $table->text('child');
-            $table->integer('stars_dog')->unsigned()->default('5');
+            $table->integer('stars_dog')->unsigned()->default('0');
             $table->text('dog');
-            $table->integer('stars_grooming')->unsigned()->default('5');
+            $table->integer('stars_grooming')->unsigned()->default('0');
             $table->text('grooming');
-            $table->integer('stars_shedding')->unsigned()->default('5');
+            $table->integer('stars_shedding')->unsigned()->default('0');
             $table->text('shedding');
-            $table->integer('stars_vocalize')->unsigned()->default('5');
+            $table->integer('stars_vocalize')->unsigned()->default('0');
             $table->text('vocalize');
             $table->text('overview');
             $table->text('history');
             $table->text('personality');
-            $table->text('description');
+            $table->text('description');                    
 //state dog only values
-            $table->integer('stars_apartment')->unsigned()->default('5');
+            $table->integer('stars_apartment')->unsigned()->default('0');
             $table->text('apartment');
-            $table->integer('stars_cat')->unsigned()->default('5');
+            $table->integer('stars_cat')->unsigned()->default('0');
             $table->text('cat');
-            $table->integer('stars_exercise')->unsigned()->default('5');
+            $table->integer('stars_exercise')->unsigned()->default('0');
             $table->text('exercise');
-            $table->integer('stars_training')->unsigned()->default('5');
+            $table->integer('stars_training')->unsigned()->default('0');
             $table->text('training');
 //end dog only values
 //start cat only values
-            $table->integer('stars_affectionate')->unsigned()->default('5');
+            $table->integer('stars_affectionate')->unsigned()->default('0');
             $table->text('affectionate');
-            $table->integer('stars_playfulness')->unsigned()->default('5');
+            $table->integer('stars_playfulness')->unsigned()->default('0');
             $table->text('playfulness');
+            $table->string('lapCat');
 //end cat only cols
             $table->smallInteger('ready')->default('0');
             $table->timestamp('lastPosted');
             $table->timestamps();
+            $table->string('url');
+
         });
     }
 

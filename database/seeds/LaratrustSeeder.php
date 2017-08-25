@@ -58,7 +58,7 @@ class LaratrustSeeder extends Seeder
                 'name' => ucwords(str_replace("_", " ", $key)),
                 'email' => $key.'@app.com',
                 'password' => bcrypt('password'),
-                'randomKey' => md5(microtime().rand(0,99999));
+                'randomKey' => md5(microtime().rand(0,99999))
             ]);
             $user->attachRole($role);
         }
@@ -74,7 +74,7 @@ class LaratrustSeeder extends Seeder
                         'email' => $key.'@app.com',
                         'password' => bcrypt('password'),
                         'remember_token' => str_random(10),
-                        'randomKey' => md5(microtime().rand(0,99999));
+                        'randomKey' => md5(microtime().rand(0,99999))
                     ]);
                     foreach ($permissions as $p => $perm) {
                         $permissionValue = $mapPermission->get($perm);

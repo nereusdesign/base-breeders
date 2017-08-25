@@ -17,11 +17,12 @@ class CreateAccountsTable extends Migration
             $table->increments('id');
             $table->string('accountName');
             $table->string('accountKey')->unique();
-            $table->integer('stripePayAmount');
+            $table->string('stripePayAmount');
             $table->float('amount', 8, 2);
             $table->string('stripeTimeAmount');
             $table->string('timeAmount');
             $table->timestamps();
+            $table->smallInteger('ready')->unsigned()->default('0');
         });
     }
 
