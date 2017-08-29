@@ -63,10 +63,11 @@ Route::prefix('manage')->middleware('role:superadministrator|administrator')->gr
   Route::resource('/permissions', 'PermissionController', ['except' => 'destroy']);
   Route::resource('/roles', 'RoleController', ['except' => 'destroy']);
   Route::prefix('breeders')->group(function () {
-      Route::get('/dashboard','ManageController@breedersDashboard')->name('manage.breeders.dashboard');
+      Route::get('/dashboard','ManageController@breedersView')->name('manage.breeders.dashboard');
       Route::get('/view','ManageController@breedersView')->name('manage.breeders.view');
-      Route::get('/add','ManageController@breedersAdd')->name('manage.breeders.add');
-      Route::get('/','ManageController@breedersIndex');
+      Route::get('/add','ListingCreator@manageBreedersAdd')->name('manage.breeders.add');
+      Route::post('/add','ListingCreator@manageBreedersProcessAdd')->name('manage.breeders.process.add');
+      Route::get('/','ManageController@breedersView');
   });
 });
 
@@ -80,6 +81,7 @@ Route::prefix('editor')->middleware('role:superadministrator|administrator|edito
 
 Route::prefix('hero')->middleware('role:superadministrator|administrator')->group(function () {
   Route::get('/', 'HeroController@index');
+  Route::get('/view', 'HeroController@index')->name('hero.view');
   Route::get('/add','HeroController@add')->name('hero.add');
   Route::get('/remove','HeroController@remove')->name('hero.remove');
 });
@@ -96,5 +98,7 @@ Route::get('breed-info/{url}', ['as' => 'breed-info','uses' =>'BreedsController@
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+
 
 Route::get('redirect', 'RedirectController@index')->name('redirect');
