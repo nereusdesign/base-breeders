@@ -10,4 +10,8 @@ class RedirectController extends Controller
   {
     return view('redirect.view');
   }
+
+  public function listingremoved(){
+    return view('redirect.listingremoved');
+  }
 }

@@ -67,17 +67,18 @@
                 Welcome {{ Auth::user()->name }}
               </a>
               <div id="blogDropdown" class="navbar-dropdown " data-style="width: 18rem;">
-
                   <a class="navbar-item" href="/2017/08/03/list-of-tags/">
                     Your Listings
                   </a>
                 <a class="navbar-item" href="">
                   Account Settings
                 </a>
+                @if(Auth::user()->hasRole(['superadministrator', 'administrator']))
                 <hr class="navbar-divider">
                 <a class="navbar-item" href="manage/dashboard">
                   Admin Options
                 </a>
+                @endif
                 <hr class="navbar-divider">
                 <a class="navbar-item" href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                   Logout

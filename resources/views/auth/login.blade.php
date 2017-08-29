@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('title','Find Your Breeder Login')
+
+@section('desc','Login to findyourbreeder.com')
+
+
 @section('content')
 
 <div class="columns">

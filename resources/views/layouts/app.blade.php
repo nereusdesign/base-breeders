@@ -19,6 +19,8 @@
      @include('_includes.nav.main')
     <div id="app">
         @yield('content')
+        <div id="footer">
+        </div>
     </div>
 
     <!-- Scripts -->

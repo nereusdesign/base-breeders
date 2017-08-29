@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
@@ -34,23 +34,15 @@ Auth::routes();
 /$this->post('password/reset', 'Auth\ResetPasswordController@reset');
 */
 
-Route::get('find-breeder', function () {
-    return view('find-breeders');
-})->name('find-breeder');
-
-Route::get('find-dog-breeder', function () {
-    return view('find-dog-breeders');
-})->name('find-dog-breeder');
-
-Route::get('find-cat-breeder', function () {
-    return view('find-cat-breeders');
-})->name('find-cat-breeder');
 
 
 Route::get('dog-and-cat-news', function () {
     return view('dog-and-cat-news');
 })->name('dog-and-cat-news');
 
+Route::get('find-cat-breeder', ['uses' =>'SearchController@findcatbreeder'])->name('find-cat-breeder');
+Route::get('find-dog-breeder', ['uses' =>'SearchController@finddogbreeder'])->name('find-dog-breeder');
+Route::get('find-breeder', ['uses' =>'SearchController@findallbreeders'])->name('find-breeders');
 
 Route::get('dog-breeds', 'BreedsController@viewDogs')->name('dog-breeds');
 Route::get('cat-breeds', 'BreedsController@viewCats')->name('cat-breeds');
@@ -94,11 +86,20 @@ Route::prefix('breeds')->group(function () {
   Route::get('/delete','BreedsController@delete')->name('breeds.delete');
 });
 
+
+//breeder listing routes find, create, edit, view
+Route::post('/find-cat-breeder','SearchController@FindBreeders')->name('cat-search');
+Route::post('/find-dog-breeder','SearchController@FindBreeders')->name('dog-search');
+Route::post('/find-breeders','SearchController@FindBreeders')->name('breeder-search');
+Route::get('view-breeder/{url}', ['as' => 'view-breeder','uses' =>'BreederController@view']);
 Route::get('breed-info/{url}', ['as' => 'breed-info','uses' =>'BreedsController@listing']);
+Route::get('find/{url}/breeders', ['uses' =>'SearchController@allByBreed']);
 
 
+//Base routes, home/checkout
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
-
+Route::get('/checkout', 'HomeController@checkout')->name('checkout');
 
 Route::get('redirect', 'RedirectController@index')->name('redirect');
+Route::get('listingremoved', 'RedirectController@listingremoved')->name('listingremoved');

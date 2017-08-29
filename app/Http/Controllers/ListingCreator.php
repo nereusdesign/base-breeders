@@ -38,7 +38,7 @@ class ListingCreator extends Controller
         }else{
           $phone = "";
         }
-
+        $isMain = "1";
         $breeder = \App\Breeder::create([
           'userId' => $userid,
           'breederName' => $request->breeder,
@@ -53,11 +53,18 @@ class ListingCreator extends Controller
             $filename = $photo->store('photos');
             \App\breederPictures::create([
                 'breeder_id' => $breeder->id,
-                'filename' => $filename
+                'filename' => $filename,
+                'isMain' => $isMain
             ]);
+            if($isMain == '1'){
+              $isMain = '0';
+            }
         }
         //generate the url, then redirect either to the admin panel or the actually profile page itself
-
-
+          $baseurl = make_base_url($request->breeder." ".$breeder->id);
+          $UpdateDetails = \App\Breeder::where('id', $breeder->id)->firstOrFail();
+          $UpdateDetails->baseurl = $baseurl;
+          $UpdateDetails->save();
+          return redirect()->route('view-breeder/'.$baseurl);
     }
 }

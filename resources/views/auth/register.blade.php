@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title','Create A Breeder Account')
+
+@section('desc','Are you a breeder looking for the best homes for your dogs or cats? Join Find Your Breeder today and show off your dogs and cats to thousands of interested visitors daily.')
+
 @section('content')
 
   <div class="columns">
@@ -7,6 +11,7 @@
       <div class="card">
         <div class="card-content">
           <h1 class="title">Create A Breeder Account</h1>
+<p class="is-size-6 m-b-30">Are you a breeder looking for the best homes for your dogs or cats? Join Find Your Breeder today and show off your dogs and cats to thousands of interested visitors daily.</p>
 
           <form action="{{route('register')}}" method="POST" role="form">
             {{csrf_field()}}
@@ -44,6 +49,22 @@
                 </div>
               </div>
             </div>
+
+              <div class="field">
+                <label for="accountType" class="label">Breeder Account Type</label>
+                <p class="control">
+                  <select class="select is-fullwidth {{$errors->has('accountType') ? 'is-danger' : ''}}" name="accountType" id="accountType" required>
+                    <option>-- Select Your Account Length --</option>
+                    @foreach ($accounts as $key => $value)
+                      <option value="{{ $key }}">{{ $value }}</option>
+                    @endforeach
+                  </select>
+                </p>
+                @if ($errors->has('accountType'))
+                  <p class="help is-danger">{{$errors->first('accountType')}}</p>
+                @endif
+              </div>
+
 
             <button class="button is-success is-outlined is-fullwidth m-t-30">Create Your Account</button>
           </form>

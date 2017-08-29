@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title','{{ $info->breedName }} Information Facts And Pictures')
+
+
+@section('desc','{{ addslashes($info->breedName) }} information including pictures, facts about behavior, looks and care of {{ addslashes($info->breedName) }}s and other {{ addslashes($info->breedType) }}s.')
+
+
 @section('styles')
   <link href="{{ asset('css/star-rating.css') }}" rel="stylesheet">
   @if ($info->breedType == 'cat')
@@ -39,7 +45,7 @@
                                                           </td>
                                                         </tr>
                                                         <tr class="no-hover"><td>
-                                                            <a href="" class="button is-info is-fullwidth">Find {{ $info->breedName }} Breeders</a>
+                                                            <a href="{{url('find-'.$info->url.'-breeders')}}" class="button is-info is-fullwidth">Find {{ $info->breedName }} Breeders</a>
                                                         </td></tr>
                                                   </tbody>
                                                </table>

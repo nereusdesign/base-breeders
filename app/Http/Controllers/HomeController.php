@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
 
 class HomeController extends Controller
 {
@@ -28,5 +28,17 @@ class HomeController extends Controller
         $files = preg_grep('~\.(jpeg|jpg|png)$~', scandir($folder_path));
         $randomFile = $files[array_rand($files)];
         return view('home',['mainimage' => $randomFile]);
+    }
+
+    public function checkout(){    
+      if(Auth::user()){
+        if(Auth::user()->accountActive == '0'){
+            return view('checkout');
+        }else{
+          return view('home',['mainimage' => $randomFile]);
+        }
+      }else{
+        return view('home',['mainimage' => $randomFile]);
+      }
     }
 }

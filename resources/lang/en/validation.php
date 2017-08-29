@@ -100,9 +100,13 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'breed' => [
+            'required' => 'Invalid breed selected',
+            'numeric' => 'Invalid breed selected',
         ],
+        'zip' => [
+          'exists' => 'Your we are currently unable to search by your location. Please try a different zip/postal code.',
+        ]
     ],
 
     /*

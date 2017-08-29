@@ -18,6 +18,7 @@ class CreateBreederPicturesTable extends Migration
             $table->integer('breeder_id')->unsigned();
             $table->foreign('breeder_id')->references('id')->on('breeders');
             $table->string('filename');
+            $table->integer('isMain')->unsigned()->default('0');
             $table->timestamps();
         });
     }

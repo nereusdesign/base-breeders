@@ -36,3 +36,35 @@ a.is-muted:hover{
         cursor:default;
     }
 }
+
+.button.is-success.is-outlined {
+    background-color: transparent !important;
+    border-color: #1d49d0 !important;
+    color: #1d49d0 !important;
+    &:hover{
+      background-color:#1d49d0 !important;
+      border-color: #1d49d0 !important;
+      color:white !important;
+    }
+}
+
+.navbar-link{
+  &:after{
+    border-color: #1d49d0 !important;
+  }
+}
+
+.select,.input{
+  font-size:1rem !important;
+  line-height:1.5 !important;
+  color: #363636 !important;
+}
+
+input,select,textarea{
+  &:focus{
+    border-color: #1d49d0!important;
+  }
+  &:active{
+    border-color: #1d49d0!important;
+  }
+}

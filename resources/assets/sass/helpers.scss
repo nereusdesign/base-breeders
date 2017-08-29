@@ -53,6 +53,17 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   }
 }
 
+.is-font-14{
+  font-size:14px;
+}
+
+.is-font-15{
+  font-size:15px;
+}
+
+.is-font-16{
+  font-size:16px;
+}
 
 //size and positioners
 $widthspaceamounts: (25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300); // Adjust this to include the pixel amounts you need.

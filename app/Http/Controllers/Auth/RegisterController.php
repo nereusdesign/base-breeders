@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/checkout';
 
     /**
      * Create a new controller instance.
@@ -47,11 +48,15 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = array(
+          'accountType' => 'Please select a valid account length'
+        );
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-        ]);
+            'accountType' => 'required|string|exists:accounts,accountKey'
+        ],$messages);
     }
 
     /**
@@ -66,7 +71,17 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'randomKey' => md5(microtime().rand(0,99999))
+            'randomKey' => md5(microtime().rand(0,99999)),
+            'payKey' => $data['accountType']
         ]);
+    }
+
+//custom function to pass account options to registration form
+    public function showRegistrationForm() {
+        $data = DB::table('accounts')->get();
+        foreach($data as $value){
+          $accounts[$value->accountKey] = $value->accountName." - $".$value->amount;
+        }
+        return view ('auth.register', ['accounts' => $accounts]);
     }
 }
