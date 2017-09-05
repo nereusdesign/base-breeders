@@ -45,6 +45,7 @@ class ListingCreator extends Controller
           'breedId' => $request->breed,
           'email' => $request->email,
           'zipcode' => $request->zipcode,
+          'about' => $request->about,
           'randomKey' => $code,
           'phone' => $phone,
           'url' => addScheme($request->url),

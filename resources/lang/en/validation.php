@@ -106,6 +106,9 @@ return [
         ],
         'zip' => [
           'exists' => 'Your we are currently unable to search by your location. Please try a different zip/postal code.',
+        ],
+        'zipcode' => [
+          'exists' => 'We were unable to validate your zip/postal code. Please try again.'
         ]
     ],
 

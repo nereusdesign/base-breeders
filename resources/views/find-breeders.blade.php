@@ -18,7 +18,7 @@
           <form action="{{route('cat-search')}}" method="POST" role="form">
             {{csrf_field()}}
             <div class="field">
-              <label for="email" class="label">Select A Cat Breed</label>
+              <label for="email" class="label">Select A Breed</label>
               <p class="control">
                 <select class="select is-fullwidth {{$errors->has('breed') ? 'is-danger' : ''}}" name="breed" id="breed" required>
                   <option>-- Select A Breed --</option>

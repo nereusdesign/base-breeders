@@ -75,3 +75,7 @@
         function fixedzip($z){
           return strtoupper(preg_replace("/[^A-Za-z0-9 ]/", '', $z));
         }
+
+        function make_base_url($txt){
+          return strtolower(str_replace(" ","-",preg_replace("/[^A-Za-z0-9- ]/", '', $txt)));
+        }

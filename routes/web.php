@@ -40,6 +40,10 @@ Route::get('dog-and-cat-news', function () {
     return view('dog-and-cat-news');
 })->name('dog-and-cat-news');
 
+Route::get('view-news', function () {
+    return view('view-article');
+})->name('view-news');
+
 Route::get('find-cat-breeder', ['uses' =>'SearchController@findcatbreeder'])->name('find-cat-breeder');
 Route::get('find-dog-breeder', ['uses' =>'SearchController@finddogbreeder'])->name('find-dog-breeder');
 Route::get('find-breeder', ['uses' =>'SearchController@findallbreeders'])->name('find-breeders');
@@ -67,9 +71,11 @@ Route::prefix('editor')->middleware('role:superadministrator|administrator|edito
   Route::get('/', 'EditorController@index');
   Route::get('/view','EditorController@view')->name('editor.view');
   Route::get('/add','EditorController@add')->name('editor.add');
+  Route::post('/add','EditorController@processAdd')->name('editor.process.add');
   Route::get('/remove','EditorController@remove')->name('editor.remove');
   Route::get('/feed','EditorController@feed')->name('editor.feed');
 });
+
 
 Route::prefix('hero')->middleware('role:superadministrator|administrator')->group(function () {
   Route::get('/', 'HeroController@index');
