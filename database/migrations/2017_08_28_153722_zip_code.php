@@ -18,16 +18,16 @@ class ZipCode extends Migration
           $table->string('zip_code',50);
           $table->string('city',255);
           $table->string('country',10);
-          $table->string('state_name',50);
+          $table->string('state_name',50)->nullable();
           $table->string('state_prefix',255);
-          $table->string('area_code',3);
-          $table->string('time_zone',50);
-          $table->string('fips_regions',50);
+          $table->string('area_code',3)->nullable();
+          $table->string('time_zone',50)->nullable();
+          $table->string('fips_regions',50)->nullable();
           $table->float('lat',10,5);
           $table->float('lon',10,5);
-          $table->string('url',100);
+          $table->string('baseUrl',255);
       });
-        
+
     }
 
     /**

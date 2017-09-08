@@ -106,6 +106,7 @@ Route::get('find/{url}/breeders', ['uses' =>'SearchController@allByBreed']);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/checkout', 'HomeController@checkout')->name('checkout');
+Route::post('/checkout', ['as' => 'checkout-post', 'uses' => 'HomeController@postOrder']);
 
 Route::get('redirect', 'RedirectController@index')->name('redirect');
 Route::get('listingremoved', 'RedirectController@listingremoved')->name('listingremoved');

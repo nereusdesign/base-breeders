@@ -22,6 +22,7 @@ class CreatePostsTable extends Migration
             $table->integer('isLive')->default('0');
             $table->dateTime('liveDate');
             $table->string('urlBase');
+            $table->integer('breedId')->references('id')->on('breeds');
         });
     }
 

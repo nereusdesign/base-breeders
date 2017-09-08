@@ -30,10 +30,16 @@ class HomeController extends Controller
         return view('home',['mainimage' => $randomFile]);
     }
 
-    public function checkout(){    
+    public function checkout(){
       if(Auth::user()){
         if(Auth::user()->accountActive == '0'){
-            return view('checkout');
+            $thisyear = date('Y');
+            $addayear = $thisyear + 21;
+            while($thisyear < $addayear){
+              $years[] = $thisyear;
+              $thisyear++;
+            }
+            return view('checkout',['years' => $years]);
         }else{
           return view('home',['mainimage' => $randomFile]);
         }
@@ -41,4 +47,10 @@ class HomeController extends Controller
         return view('home',['mainimage' => $randomFile]);
       }
     }
+
+    public function postOrder(Request $request)
+    {
+        //
+    }
+
 }

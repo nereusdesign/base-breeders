@@ -15,11 +15,11 @@ class Breeders extends Migration
     {
       Schema::create('breeders', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('userId')->unsigned()->default('0');
+          $table->integer('userId')->references('id')->on('users');
           $table->string('breederName');
-          $table->integer('breedId')->unsigned()->default('0');
+          $table->integer('breedId')->references('id')->on('breeds');
           $table->string('email');
-          $table->string('zipcode');
+          $table->string('zipcode')->references('zip_code')->on('zip_code');
           $table->string('baseUrl');
           $table->string('url');
           $table->string('phone');
