@@ -18,6 +18,31 @@
                   Search Our Free Breeder Directory To Find Dog &amp; Cat Breeders
                 </h2>
                 <br>
+
+                <div class="field">
+                  <p class="control">
+                    <div class="select">
+                      <select class="select" name="breed" id="breed" required>
+                        <option>-- Select A Breed --</option>
+                         <optgroup label="Dogs">
+                         @foreach($dogarr as $dog)
+                           <option value="{{ $dog->id }}">{{ $dog->breedName }}</option>
+                         @endforeach
+                         </optgroup>
+                         <optgroup label="Cats">
+                         @foreach($catarr as $cat)
+                           <option value="{{ $cat->id }}">{{ $cat->breedName }}</option>
+                         @endforeach
+                         </optgroup>
+                      </select>
+                    </div>
+                  </p>
+                  @if ($errors->has('breed'))
+                    <p class="help is-danger">{{$errors->first('breed')}}</p>
+                  @endif
+                </div>
+
+
                 <p class="has-text-centered">
                   <a class="button is-large">
                     <i class="fa fa-search" aria-hidden="true"></i>Search

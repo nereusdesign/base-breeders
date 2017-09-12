@@ -1,6 +1,6 @@
 <nav class="navbar has-shadow">
   <div class="navbar-brand">
-      <a href="{{route('home')}}" class="nav-item"><img src="{{asset('images/findyourbreederlogo.png')}}" alt="Find Your Breeder Logo">
+      <a href="{{route('index')}}" class="nav-item"><img src="{{asset('images/findyourbreederlogo.png')}}" alt="Find Your Breeder Logo">
           Find Breeder
       </a>
     <div class="navbar-burger burger" data-target="navMenubd-example">
@@ -67,15 +67,15 @@
                 Welcome {{ Auth::user()->name }}
               </a>
               <div id="blogDropdown" class="navbar-dropdown " data-style="width: 18rem;">
-                  <a class="navbar-item" href="/2017/08/03/list-of-tags/">
+                  <a class="navbar-item" href="{{route('listings')}}">
                     Your Listings
                   </a>
-                <a class="navbar-item" href="">
+                <a class="navbar-item" href="{{route('settings')}}">
                   Account Settings
                 </a>
                 @if(Auth::user()->hasRole(['superadministrator', 'administrator']))
                 <hr class="navbar-divider">
-                <a class="navbar-item" href="manage/dashboard">
+                <a class="navbar-item" href="{{route('manage.dashboard')}}">
                   Admin Options
                 </a>
                 @endif

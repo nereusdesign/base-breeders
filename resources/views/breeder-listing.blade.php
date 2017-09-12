@@ -1,7 +1,72 @@
 @extends('layouts.app')
 
+
+@section('styles')
+<style>
+  blockquote{
+  display:block;
+  background: #fff;
+  padding: 15px 20px 15px 45px;
+  margin: 15px 0 20px;
+  position: relative;
+
+  /*Font*/
+  font-family: Georgia, serif;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #666;
+  text-align: justify;
+
+  /*Borders - (Optional)*/
+  border-left: 15px solid #4186c8;
+  border-right: 2px solid #4186c8;
+
+  /*Box Shadow - (Optional)*/
+  -moz-box-shadow: 2px 2px 15px #ccc;
+  -webkit-box-shadow: 2px 2px 15px #ccc;
+  box-shadow: 2px 2px 15px #ccc;
+}
+
+blockquote::before{
+  content: "\201C"; /*Unicode for Left Double Quote*/
+
+  /*Font*/
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: bold;
+  color: #999;
+
+  /*Positioning*/
+  position: absolute;
+  left: 10px;
+  top:5px;
+}
+
+blockquote::after{
+  /*Reset to make sure*/
+  content: "";
+}
+
+blockquote a{
+  text-decoration: none;
+  background: #eee;
+  cursor: pointer;
+  padding: 0 3px;
+  color: #c76c0c;
+}
+
+blockquote a:hover{
+ color: #666;
+}
+
+blockquote em{
+  font-style: italic;
+}
+</style>
+@endsection
+
 @section('content')
-  <div class="container profile">
+  <div class="container profile m-t-25">
 
           <div class="section profile-heading">
                   <div class="columns">
@@ -12,26 +77,36 @@
                           </div>
                           <div class="column is-4 name">
                                   <p>
-                                          <span class="title is-bold">John Smith</span>
-                                          <span class="button is-primary is-outlined follow">Follow</span>
+                                          <span class="title is-bold">{{ $info->breederName }}</span>
+
                                   </p>
-                                  <p class="tagline">The users profile bio would go here, of course. It could be two lines</p>
+                                  <p class="tagline">{{ $info->breedName }} Breeder In {{ $info->city }},{{ $info->state_prefix }}</p>
+
+                                    @if (!empty($info->about))
+                                      <blockquote>
+                                            {{ $info->about }}
+                                      </blockquote>
+                                    @endif
+
                           </div>
                           <div class="column is-2 followers has-text-centered">
-                                  <p class="stat-val">129k</p>
-                                  <p class="stat-key">followers</p>
                           </div>
                   </div>
           </div>
           <div class="profile-options">
                   <div class="tabs is-fullwidth">
                           <ul>
-                                  <li class="link is-active"><a><span class="icon"><i class="fa fa-list"></i></span> <span>Photos</span></a>
+                                @if (!empty($info->url))
+                                  <li class="link main-border-bottom-color"><a href="{{ $info->url }}" target="_blank" class="font-color-black"><span class="icon"><i class="fa fa-list"></i></span> <span>Visit Website</span></a>
                                   </li>
-                                  <li class="link"><a><span class="icon"><i class="fa fa-heart"></i></span> <span>Available</span></a>
+                                @endif
+                                  <li class="link main-border-bottom-color"><a class="font-color-black"><span class="icon"><i class="fa fa-heart"></i></span> <span>Send Email</span></a>
                                   </li>
-                                  <li class="link"><a><span class="icon"><i class="fa fa-th"></i></span> <span>My Posts</span></a>
-                                  </li>
+                                  @if (!empty($info->phone))
+                                    <li class="link main-border-bottom-color"><a><span class="icon"><i class="fa fa-th"></i></span> <span>{{ $info->phone }}</span></a>
+                                    </li>
+                                  @endif
+
                           </ul>
                   </div>
           </div>
@@ -39,84 +114,11 @@
 
           <div class="spacer"></div>
 
+
           <div class="columns">
                   <div class="column is-3">
-                          <div class="card">
-                                  <div class="card-image">
-                                          <figure class="image is-4by3">
-                                                  <img src="http://placehold.it/300x225" alt="">
-                                          </figure>
-                                  </div>
-                                  <div class="card-content">
-                                          <div class="content">
-                                                  <span class="tag is-dark">#webdev</span>
-                                                  <strong class="timestamp">2 d</strong>
-                                          </div>
-                                  </div>
-                                  <footer class="card-footer">
-                                          <a class="card-footer-item">Save</a>
-                                          <a class="card-footer-item">Edit</a>
-                                          <a class="card-footer-item">Delete</a>
-                                  </footer>
-                          </div>
-                          <br>
-                          <div class="card">
-                                  <div class="card-image">
-                                          <figure class="image is-4by3">
-                                                  <img src="http://placehold.it/300x225" alt="">
-                                          </figure>
-                                  </div>
-                                  <div class="card-content">
-                                          <div class="content">
-                                                  <span class="tag is-dark">#webdev</span>
-                                                  <strong class="timestamp">2 d</strong>
-                                          </div>
-                                  </div>
-                                  <footer class="card-footer">
-                                          <a class="card-footer-item">Save</a>
-                                          <a class="card-footer-item">Edit</a>
-                                          <a class="card-footer-item">Delete</a>
-                                  </footer>
-                          </div>
-                          <br>
-                          <div class="card">
-                                  <div class="card-image">
-                                          <figure class="image is-4by3">
-                                                  <img src="http://placehold.it/300x225" alt="">
-                                          </figure>
-                                  </div>
-                                  <div class="card-content">
-                                          <div class="content">
-                                                  <span class="tag is-dark">#webdev</span>
-                                                  <strong class="timestamp">2 d</strong>
-                                          </div>
-                                  </div>
-                                  <footer class="card-footer">
-                                          <a class="card-footer-item">Save</a>
-                                          <a class="card-footer-item">Edit</a>
-                                          <a class="card-footer-item">Delete</a>
-                                  </footer>
-                          </div>
-                          <br>
-                          <div class="card">
-                                  <div class="card-image">
-                                          <figure class="image is-4by3">
-                                                  <img src="http://placehold.it/300x225" alt="">
-                                          </figure>
-                                  </div>
-                                  <div class="card-content">
-                                          <div class="content">
-                                                  <span class="tag is-dark">#webdev</span>
-                                                  <strong class="timestamp">2 d</strong>
-                                          </div>
-                                  </div>
-                                  <footer class="card-footer">
-                                          <a class="card-footer-item">Save</a>
-                                          <a class="card-footer-item">Edit</a>
-                                          <a class="card-footer-item">Delete</a>
-                                  </footer>
-                          </div>
-                          <br>
+                      Availble/ Pictures
+
                   </div>
 
           </div>

@@ -79,3 +79,47 @@
         function make_base_url($txt){
           return strtolower(str_replace(" ","-",preg_replace("/[^A-Za-z0-9- ]/", '', $txt)));
         }
+
+      function neat_trim($string, $max_length, $append = '')
+        {
+          if (strlen($string) > $max_length) {
+            $string = substr($string, 0, $max_length);
+            $pos = strrpos($string, ' ');
+            if ($pos === false) {
+              return substr($string, 0, $max_length) . $append;
+            }
+            return substr($string, 0, $pos) . $append;
+          }
+          else {
+            return $string;
+          }
+        }
+
+      function time_elapsed_string($datetime, $full = false) {
+        $now = new DateTime;
+        $ago = new DateTime($datetime);
+        $diff = $now->diff($ago);
+
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+
+        $string = array(
+            'y' => 'year',
+            'm' => 'month',
+            'w' => 'week',
+            'd' => 'day',
+            'h' => 'hour',
+            'i' => 'minute',
+            's' => 'second',
+        );
+        foreach ($string as $k => &$v) {
+            if ($diff->$k) {
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
+        }
+
+        if (!$full) $string = array_slice($string, 0, 1);
+        return $string ? implode(', ', $string) . ' ago' : 'just now';
+    }

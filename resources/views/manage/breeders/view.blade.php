@@ -32,7 +32,7 @@
                   <td>{{$user->breederName}}</td>
                   <td>{{$user->breedId}}</td>
                   <td>{{$user->updated_at->toFormattedDateString()}}</td>
-                  <td class="has-text-right"><a class="button is-outlined m-r-5" href="{{route('users.show', $user->id)}}">View</a><a class="button is-light" href="{{route('users.edit', $user->id)}}">Edit</a></td>
+                  <td class="has-text-right"><a class="button is-outlined m-r-5" href="{{route('view-breeder',['url' => $user->baseUrl])}}">View/Edit</a></td>
                 </tr>
               @endforeach
             </tbody>

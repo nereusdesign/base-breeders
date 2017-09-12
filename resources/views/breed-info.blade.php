@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title','{{ $info->breedName }} Information Facts And Pictures')
+@section('title',$info->breedName.' Information Facts And Pictures')
 
 
-@section('desc','{{ addslashes($info->breedName) }} information including pictures, facts about behavior, looks and care of {{ addslashes($info->breedName) }}s and other {{ addslashes($info->breedType) }}s.')
+@section('desc',addslashes($info->breedName).' information including pictures, facts about behavior, looks and care of '.addslashes($info->breedName).'s and other '.addslashes($info->breedType).'s.')
 
 
 @section('styles')

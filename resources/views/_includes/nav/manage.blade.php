@@ -4,69 +4,55 @@
       General
     </p>
     <ul class="menu-list">
-      <li><a href="{{route('manage.dashboard')}}">Dashboard</a></li>
+      <li><a href="{{route('manage.dashboard')}}" class="is-font-14">Dashboard</a></li>
     </ul>
 
     <p class="menu-label">
-      User/Permission Administration
+      Users
     </p>
+
     <ul class="menu-list">
-      <li><a href="{{route('users.index')}}">Manage Users</a></li>
-      <li>
-        <a href="{{route('permissions.index')}}">Roles &amp; Permissions</a>
-        <ul>
-          <li><a href="{{route('roles.index')}}">Roles</a></li>
-          <li><a href="{{route('permissions.index')}}">Permissions</a></li>
-        </ul>
-      </li>
+      <li><a href="{{route('users.index')}}" class="is-font-14">Manage Users</a></li>
+      <li><a href="{{route('roles.index')}}" class="is-font-14">Roles</a></li>
+      <li><a href="{{route('permissions.index')}}" class="is-font-14">Permissions</a></li>
     </ul>
 
     <p class="menu-label">
       Breeders
     </p>
     <ul class="menu-list">
-      <li><a href="{{route('manage.breeders.dashboard')}}">Manage Breeders</a></li>
-      <li>
-        <a href="{{route('manage.breeders.view')}}">View Breeder Listings</a>
-        <ul>
-          <li><a href="{{route('manage.breeders.add')}}">Add Listing</a></li>
-        </ul>
-      </li>
+      <li><a href="{{route('manage.breeders.dashboard')}}" class="is-font-14">Manage Breeders</a></li>
+      <li><a href="{{route('manage.breeders.view')}}" class="is-font-14">View Breeder Listings</a></li>
+      <li><a href="{{route('manage.breeders.add')}}" class="is-font-14">Add Listing</a></li>
     </ul>
 
 
     <p class="menu-label">
-      Site Administration
+      Breed Information
     </p>
     <ul class="menu-list">
-      <li><a href="{{route('breeds.index')}}">Edit Breed Information</a></li>
-      <li>
-        <a href="{{route('breeds.index')}}">Breed Information</a>
-        <ul>
-          <li><a href="{{route('breeds.add')}}">Add New Breed</a></li>
-          <li><a href="{{route('breeds.delete')}}">Delete A Breed</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="{{route('editor.view')}}">News &amp; Articles</a>
-        <ul>
-          <li><a href="{{route('editor.add')}}">Add Post</a></li>
-          <li><a href="{{route('editor.remove')}}">Remove Post</a></li>
-          <li><a href="{{route('editor.feed')}}">RSS</a></li>
-        </ul>
-      </li>
-
-      <li>
-        <a href="{{route('hero.view')}}">Main HERO Pictures</a>
-        <ul>
-          <li><a href="{{route('hero.add')}}">Add Pictures</a></li>
-          <li><a href="{{route('hero.remove')}}">Remove/Suspend Pictures</a></li>
-        </ul>
-      </li>
+          <li><a href="{{route('breeds.index')}}" class="is-font-14">Breed Information</a></li>
+          <li><a href="{{route('breeds.add')}}" class="is-font-14">Add New Breed</a></li>
     </ul>
+    <p class="menu-label">
+      News/Articles
+    </p>
+        <ul class="menu-list">
+          <li><a href="{{route('editor.view')}}" class="is-font-14">View Posts</a></li>
+          <li><a href="{{route('editor.add')}}" class="is-font-14">Add Post</a></li>
+          <li><a href="{{route('editor.remove')}}" class="is-font-14">Remove Post</a></li>
+          <li><a href="{{route('editor.feed')}}" class="is-font-14">RSS</a></li>
+        </ul>
 
 
 
+        <p class="menu-label">
+          Front Page Pictures
+        </p>
+        <ul class="menu-list">
+          <li><a href="{{route('hero.add')}}" class="is-font-14">Add Pictures</a></li>
+          <li><a href="{{route('hero.view')}}" class="is-font-14">View Pictures</a></li>
+        </ul>
 
 
   </aside>

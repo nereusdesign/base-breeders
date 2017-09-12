@@ -16,8 +16,8 @@ class BreedsController extends Controller
     public function view()
     {
       //get all the breeds so view breeds can list it
-      $dogarr = \App\Breed::where('breedType','dog')->orderBy('breedName')->get();
-      $catarr = \App\Breed::where('breedType','cat')->orderBy('breedName')->get();
+      $dogarr = \App\Breed::where('breedType','dog')->select('breedName','id')->orderBy('breedName')->get();
+      $catarr = \App\Breed::where('breedType','cat')->select('breedName','id')->orderBy('breedName')->get();
       return view('view-breeds',['dogs' => $dogarr,'cats' => $catarr]);
     }
 

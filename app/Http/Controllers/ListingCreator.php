@@ -50,15 +50,18 @@ class ListingCreator extends Controller
           'phone' => $phone,
           'url' => addScheme($request->url),
         ]);
-        foreach ($request->photos as $photo) {
-            $filename = $photo->store('photos');
-            \App\breederPictures::create([
-                'breeder_id' => $breeder->id,
-                'filename' => $filename,
-                'isMain' => $isMain
-            ]);
-            if($isMain == '1'){
-              $isMain = '0';
+
+        if(!empty($request->photos)){
+            foreach ($request->photos as $photo) {
+                $filename = $photo->store('photos');
+                \App\breederPictures::create([
+                    'breeder_id' => $breeder->id,
+                    'filename' => $filename,
+                    'isMain' => $isMain
+                ]);
+                if($isMain == '1'){
+                  $isMain = '0';
+                }
             }
         }
         //generate the url, then redirect either to the admin panel or the actually profile page itself
@@ -66,6 +69,7 @@ class ListingCreator extends Controller
           $UpdateDetails = \App\Breeder::where('id', $breeder->id)->firstOrFail();
           $UpdateDetails->baseurl = $baseurl;
           $UpdateDetails->save();
-          return redirect()->route('view-breeder/'.$baseurl);
+          return redirect()->route('view-breeder',['url' => $baseurl]);
+
     }
 }

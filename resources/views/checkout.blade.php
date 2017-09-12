@@ -11,7 +11,10 @@
   <div class="columns">
     <div class="column is-one-third is-offset-one-third m-t-100">
       <div class="card">
-        <div class="card-content">
+          <div class="card-content">
+        @if(Session::has('status'))
+              <p class="help is-danger is-font-16">{{ Session::get('status') }}</p>
+        @endif
           <h1 class="title is-spaced">Activate your account</h1>
               <h2 class="subtitle m-t-20">Billing Address</h2>
           <form action="{{route('checkout-post')}}" method="POST" role="form">
@@ -125,7 +128,7 @@
           </div>
         </div> <!-- end of .card-content -->
       </div> <!-- end of .card -->
-      <h5 class="has-text-centered m-t-20"><a href="{{route('password.request')}}" class="is-muted">Forgot Your Password?</a></h5>
+
     </div>
   </div>
 

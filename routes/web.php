@@ -36,22 +36,39 @@ Auth::routes();
 
 
 
-Route::get('dog-and-cat-news', function () {
-    return view('dog-and-cat-news');
-})->name('dog-and-cat-news');
+//Base routes, home/checkout
 
-Route::get('view-news', function () {
-    return view('view-article');
-})->name('view-news');
+Route::get('/dog-and-cat-news', 'PostController@showArticles')->name('dog-and-cat-news');
+Route::get('/dog-and-cat-news/{url}', ['as' => 'view-news','uses' =>'PostController@view']);
 
-Route::get('find-cat-breeder', ['uses' =>'SearchController@findcatbreeder'])->name('find-cat-breeder');
-Route::get('find-dog-breeder', ['uses' =>'SearchController@finddogbreeder'])->name('find-dog-breeder');
-Route::get('find-breeder', ['uses' =>'SearchController@findallbreeders'])->name('find-breeders');
+Route::get('/find-cat-breeder', ['uses' =>'SearchController@findcatbreeder'])->name('find-cat-breeder');
+Route::get('/find-dog-breeder', ['uses' =>'SearchController@finddogbreeder'])->name('find-dog-breeder');
+Route::get('/find-breeder', ['uses' =>'SearchController@findallbreeders'])->name('find-breeders');
 
-Route::get('dog-breeds', 'BreedsController@viewDogs')->name('dog-breeds');
-Route::get('cat-breeds', 'BreedsController@viewCats')->name('cat-breeds');
-Route::get('view-breeds', 'BreedsController@view')->name('view-breeds');
+Route::get('/dog-breeds', 'BreedsController@viewDogs')->name('dog-breeds');
+Route::get('/cat-breeds', 'BreedsController@viewCats')->name('cat-breeds');
+Route::get('/view-breeds', 'BreedsController@view')->name('view-breeds');
 
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('index');
+Route::get('/checkout', 'HomeController@checkout')->name('checkout');
+Route::post('/checkout', ['as' => 'checkout-post', 'uses' => 'HomeController@postOrder']);
+
+
+//Base user account routes
+Route::get('/your-listings', 'BreederController@viewYourListings')->name('listings');
+Route::get('/account-settings', 'BreederController@accountSettings')->name('settings');
+
+
+//breeder listing routes find, create, edit, view
+Route::post('/find-cat-breeder','SearchController@FindBreeders')->name('cat-search');
+Route::post('/find-dog-breeder','SearchController@FindBreeders')->name('dog-search');
+Route::post('/find-breeders','SearchController@FindBreeders')->name('breeder-search');
+Route::get('/view-breeder/{url}', ['as' => 'view-breeder','uses' =>'BreederController@view']);
+Route::get('/breed-info/{url}', ['as' => 'breed-info','uses' =>'BreedsController@listing']);
+Route::get('/find/{url}/breeders', ['uses' =>'SearchController@allByBreed']);
+
+//Admin Routes
 Route::prefix('manage')->middleware('role:superadministrator|administrator')->group(function () {
   Route::get('/', 'ManageController@index');
   Route::get('/dashboard','ManageController@dashboard')->name('manage.dashboard');
@@ -92,21 +109,7 @@ Route::prefix('breeds')->group(function () {
   Route::get('/delete','BreedsController@delete')->name('breeds.delete');
 });
 
-
-//breeder listing routes find, create, edit, view
-Route::post('/find-cat-breeder','SearchController@FindBreeders')->name('cat-search');
-Route::post('/find-dog-breeder','SearchController@FindBreeders')->name('dog-search');
-Route::post('/find-breeders','SearchController@FindBreeders')->name('breeder-search');
-Route::get('view-breeder/{url}', ['as' => 'view-breeder','uses' =>'BreederController@view']);
-Route::get('breed-info/{url}', ['as' => 'breed-info','uses' =>'BreedsController@listing']);
-Route::get('find/{url}/breeders', ['uses' =>'SearchController@allByBreed']);
-
-
-//Base routes, home/checkout
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/checkout', 'HomeController@checkout')->name('checkout');
-Route::post('/checkout', ['as' => 'checkout-post', 'uses' => 'HomeController@postOrder']);
-
-Route::get('redirect', 'RedirectController@index')->name('redirect');
-Route::get('listingremoved', 'RedirectController@listingremoved')->name('listingremoved');
+//Redirects
+Route::get('/page-moved', 'RedirectController@index')->name('redirect');
+Route::get('/listing-removed', 'RedirectController@listingremoved')->name('listingremoved');
+Route::get('/member-only', 'RedirectController@notOnline')->name('member-only');

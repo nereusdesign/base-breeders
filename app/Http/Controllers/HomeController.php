@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\Breed;
 
 class HomeController extends Controller
 {
@@ -27,7 +28,9 @@ class HomeController extends Controller
         $folder_path = public_path()."/images/static/"; // in my test case it's under /public folder
         $files = preg_grep('~\.(jpeg|jpg|png)$~', scandir($folder_path));
         $randomFile = $files[array_rand($files)];
-        return view('home',['mainimage' => $randomFile]);
+        $dogarr = \App\Breed::where('breedType','dog')->orderBy('breedName')->get();
+        $catarr = \App\Breed::where('breedType','cat')->orderBy('breedName')->get();
+        return view('home',['mainimage' => $randomFile,'dogarr' => $dogarr,'catarr' => $catarr]);
     }
 
     public function checkout(){

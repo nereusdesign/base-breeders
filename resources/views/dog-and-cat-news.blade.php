@@ -42,20 +42,20 @@
             <h1 class="title">Latest Dog &amp; Cat Related News</h1>
             <h2 class="subtitle">Find dog and cat related news articles and information</h2>
 
-@for ($i = 0; $i < 10; $i++)
+@foreach ($posts as $post)
             <div class="column is-full-desktop">
               <h4 class="blog-timestamp">
-                2 days ago
+                {{ $post->timeAgo() }}
               </h4>
               <h2 class="blog-title">
-                <a class="blog-link" href="#">Cras feugiat euismod sem accumsan ultrices.</a>
+                <a class="blog-link" href="{{ route('view-news',['url' => $post->urlBase]) }}">{{ $post->headline() }}</a>
               </h2>
               <h3 class="blog-summary">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ornare malesuada dolor ut dictum. Pellentesque eget orci nisl. Vivamus sit amet ullamcorper elit. Donec mattis scelerisque dui sed convallis.
+                {{ $post->summary() }}
               </h3>
               <hr class="dropdown-divider">
             </div>
-@endfor
+@endforeach
         </div>
       </div>
 
@@ -63,7 +63,7 @@
         <div class="container">
           <div class="tabs is-centered">
             <ul>
-              <li><a href="#">View more posts</a></li>
+              {{$posts->links()}}
             </ul>
           </div>
         </div>
