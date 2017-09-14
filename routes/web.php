@@ -59,6 +59,16 @@ Route::post('/checkout', ['as' => 'checkout-post', 'uses' => 'HomeController@pos
 Route::get('/your-listings', 'BreederController@viewYourListings')->name('listings');
 Route::get('/account-settings', 'BreederController@accountSettings')->name('settings');
 
+//update user Settings
+Route::post('/update-email', 'UserController@updateAccount')->name('update-account');
+Route::get('/update-email', function () {
+    return redirect()->route('settings');
+})->name('update-account');
+
+Route::post('/update-password', 'UserController@updateAccountPw')->name('update-account-pw');
+Route::get('/update-password', function () {
+    return redirect()->route('settings');
+})->name('update-account-pw');
 
 //breeder listing routes find, create, edit, view
 Route::post('/find-cat-breeder','SearchController@FindBreeders')->name('cat-search');

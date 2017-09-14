@@ -9,6 +9,7 @@ use Auth;
 use Session;
 use App\User;
 use App\Breed;
+use App\Account;
 
 
 class BreederController extends Controller
@@ -39,7 +40,17 @@ class BreederController extends Controller
 
     public function accountSettings(){
         if(Auth::check()){
-            return view('account-settings');
+            switch (Auth::user()->accountActive) {
+              case '1':
+                $status = "<span class='has-text-success has-text-weight-bold'>(Active)</span>";
+                break;
+              default:
+                $status = "<span class='has-text-warning has-text-weight-bold'>(Pending)</span>";
+                break;
+            }
+            $type = \App\Account::where('accountKey',Auth::user()->payKey)->first();
+            $accountstatus = $type->accountName.' '.$status;
+            return view('account-settings',['accountStatus' => $accountstatus]);
         }else{
             return redirect()->route('member-only');
         }

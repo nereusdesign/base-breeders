@@ -11,6 +11,9 @@
   <div class="column is-one-third is-offset-one-third m-t-100">
     <div class="card">
       <div class="card-content">
+        @if(Session::has('status'))
+              <p class="help is-danger is-font-16">{{ Session::get('status') }}</p>
+        @endif
         <h1 class="title">Log In</h1>
 
         <form action="{{route('login')}}" method="POST" role="form">

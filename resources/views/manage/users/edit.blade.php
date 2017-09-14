@@ -45,6 +45,15 @@
               </div>
             </b-radio-group>
           </div>
+
+
+          <div class="field">
+            <label for="password" class="label">Account Status</label>
+
+          </div>
+
+
+
         </div> <!-- end of .column -->
 
         <div class="column">

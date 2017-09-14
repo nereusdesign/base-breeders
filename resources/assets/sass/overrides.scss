@@ -37,6 +37,14 @@ a.is-muted:hover{
     }
 }
 
+.is-hover{
+  &:hover {
+      color:inherit !important;
+      background-color:inherit !important;
+      cursor:pointer;
+  }
+}
+
 .button.is-success.is-outlined {
     background-color: transparent !important;
     border-color: #1d49d0 !important;

@@ -7,6 +7,7 @@ use DB;
 use Session;
 use Hash;
 use Input;
+use Auth;
 class UserController extends Controller
 {
     /**
@@ -142,4 +143,35 @@ class UserController extends Controller
     {
         //
     }
+
+    public function updateAccount(Request $request){
+        if(Auth::check()){
+              $this->validate($request, [
+                'email' => 'required|email|unique:users,email,'.Auth::id()
+              ]);
+              $user = User::find(Auth::id());
+              $user->email = $request->email;
+              $user->save();
+              Session::flash('success', 'Account updated.');
+              return redirect()->route('settings');
+        }else{
+          return redirect()->route('member-only');
+        }
+    }
+
+    public function updateAccountPw(Request $request){
+        if(Auth::check()){
+              $this->validate($request, [
+                'password' => 'required'
+              ]);
+              $user = User::find(Auth::id());
+              $user->password = Hash::make($request->password);
+              $user->save();
+              Session::flash('success', 'Account updated.');
+              return redirect()->route('settings');
+        }else{
+          return redirect()->route('member-only');
+        }
+    }
+
 }
