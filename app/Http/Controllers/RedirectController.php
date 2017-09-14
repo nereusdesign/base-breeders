@@ -20,4 +20,11 @@ class RedirectController extends Controller
     Session::flash('status', 'You must be logged in to access this page.');
     return redirect()->route('login');
   }
+
+  public function notAdmin(){
+    return view('redirect.notAdmin');
+  }
+
+
+
 }

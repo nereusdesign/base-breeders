@@ -29,6 +29,13 @@
 
         <div class="field">
           <div class="field">
+            <label for="email" class="label">Status</label>
+            <pre>{!! $user->displayAccountStatus() !!}</pre>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field">
             <label for="email" class="label">Roles</label>
             <ul>
               {{$user->roles->count() == 0 ? 'This user has not been assigned any roles yet' : ''}}

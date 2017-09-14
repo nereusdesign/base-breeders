@@ -38,22 +38,5 @@ class BreederController extends Controller
       }
     }
 
-    public function accountSettings(){
-        if(Auth::check()){
-            switch (Auth::user()->accountActive) {
-              case '1':
-                $status = "<span class='has-text-success has-text-weight-bold'>(Active)</span>";
-                break;
-              default:
-                $status = "<span class='has-text-warning has-text-weight-bold'>(Pending)</span>";
-                break;
-            }
-            $type = \App\Account::where('accountKey',Auth::user()->payKey)->first();
-            $accountstatus = $type->accountName.' '.$status;
-            return view('account-settings',['accountStatus' => $accountstatus]);
-        }else{
-            return redirect()->route('member-only');
-        }
-    }
 
 }

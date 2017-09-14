@@ -18,7 +18,7 @@
             <thead>
               <tr>
                 <th>id</th>
-                <th>Name</th>
+                <th>Status</th>
                 <th>Email</th>
                 <th>Date Created</th>
                 <th></th>
@@ -29,7 +29,7 @@
               @foreach ($users as $user)
                 <tr>
                   <th>{{$user->id}}</th>
-                  <td>{{$user->name}}</td>
+                  <td>{!! $user->displayAccountStatus() !!}</td>
                   <td>{{$user->email}}</td>
                   <td>{{$user->created_at->toFormattedDateString()}}</td>
                   <td class="has-text-right"><a class="button is-outlined m-r-5" href="{{route('users.show', $user->id)}}">View</a><a class="button is-light" href="{{route('users.edit', $user->id)}}">Edit</a></td>

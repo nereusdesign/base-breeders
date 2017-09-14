@@ -39,7 +39,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
       $this->validate($request, [
-        'name' => 'required|max:255',
+        'status_options' => 'boolean|numeric',
         'email' => 'required|email|unique:users'
       ]);
       if (!empty($request->password)) {
@@ -56,8 +56,10 @@ class UserController extends Controller
         $password = $str;
       }
       $user = new User();
-      $user->name = $request->name;
       $user->email = $request->email;
+      $user->name = $request->email;
+      $user->accountActive = $request->status_options;
+      $user->randomKey = md5(microtime().rand(0,99999));
       $user->password = Hash::make($password);
       $user->save();
       if ($request->roles) {
@@ -104,11 +106,10 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
       $this->validate($request, [
-        'name' => 'required|max:255',
+        'status_options' => 'boolean|numeric',
         'email' => 'required|email|unique:users,email,'.$id
       ]);
       $user = User::findOrFail($id);
-      $user->name = $request->name;
       $user->email = $request->email;
       if ($request->password_options == 'auto') {
         $length = 10;
@@ -122,8 +123,12 @@ class UserController extends Controller
       } elseif ($request->password_options == 'manual') {
         $user->password = Hash::make($request->password);
       }
+      $user->accountActive = $request->status_options;
       $user->save();
-      $user->syncRoles(explode(',', $request->roles));
+      if ($request->roles) {
+        $user->syncRoles(explode(',', $request->roles));
+      }
+
 
       return redirect()->route('users.show', $id);
       // if () {
@@ -143,6 +148,25 @@ class UserController extends Controller
     {
         //
     }
+
+    public function accountSettings(){
+        if(Auth::check()){
+            switch (Auth::user()->accountActive) {
+              case '1':
+                $status = "<span class='has-text-success has-text-weight-bold'>(Active)</span>";
+                break;
+              default:
+                $status = "<span class='has-text-warning has-text-weight-bold'>(Pending)</span>";
+                break;
+            }
+            $type = \App\Account::where('accountKey',Auth::user()->payKey)->first();
+            $accountstatus = $type->accountName.' '.$status;
+            return view('account-settings',['accountStatus' => $accountstatus]);
+        }else{
+            return redirect()->route('member-only');
+        }
+    }
+
 
     public function updateAccount(Request $request){
         if(Auth::check()){
@@ -173,5 +197,6 @@ class UserController extends Controller
           return redirect()->route('member-only');
         }
     }
+
 
 }

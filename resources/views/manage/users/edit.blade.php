@@ -48,8 +48,32 @@
 
 
           <div class="field">
-            <label for="password" class="label">Account Status</label>
+            <label for="password" class="label">Current Account Status</label>
+            <p class="control">
+              <div class="field">
+                {!! $user->displayAccountStatus() !!}
+              </div>
 
+              <div class="field">
+                <label for="aStatus" class="label">New Account Status</label>
+                <b-radio-group v-model="status_options">
+                  <div class="field">
+                    <b-radio name="status_options" value="0">Pending</b-radio>
+                  </div>
+                  <div class="field">
+                    <b-radio name="status_options" value="1">Active</b-radio>
+                    <p class="control">
+                      <div id="activeDateDiv" v-if="status_options == '1'">
+                          Make it lifetime
+                      </div>
+                    </p>
+                  </div>
+                </b-radio-group>
+              </div>
+
+
+
+            </p>
           </div>
 
 
@@ -76,8 +100,9 @@
         </div>
       </div>
     </form>
-
   </div> <!-- end of .flex-container -->
+
+
 @endsection
 
 
@@ -87,8 +112,11 @@
       el: '#app',
       data: {
         password_options: 'keep',
+        status_options: '{{ $user->accountActive }}',
         rolesSelected: {!! $user->roles->pluck('id') !!}
       }
     });
   </script>
+
+
 @endsection

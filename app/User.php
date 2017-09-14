@@ -28,4 +28,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function displayAccountStatus(){
+      switch ($this->accountActive) {
+        case '1':
+          $status = "<span class='has-text-success has-text-weight-bold'>(Active)</span>";
+          break;
+        default:
+          $status = "<span class='has-text-warning has-text-weight-bold'>(Pending)</span>";
+          break;
+      }
+      return $status;
+    }
+
+
 }

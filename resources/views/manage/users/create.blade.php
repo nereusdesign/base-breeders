@@ -12,12 +12,6 @@
       {{csrf_field()}}
       <div class="columns">
         <div class="column">
-          <div class="field">
-            <label for="name" class="label">Name</label>
-            <p class="control">
-              <input type="text" class="input" name="name" id="name">
-            </p>
-          </div>
 
           <div class="field">
             <label for="email" class="label">Email:</label>
@@ -33,6 +27,26 @@
               <b-checkbox name="auto_generate" class="m-t-15" v-model="auto_password">Auto Generate Password</b-checkbox>
             </p>
           </div>
+
+
+
+          <div class="field">
+            <label for="aStatus" class="label">Account Status</label>
+            <b-radio-group v-model="status_options">
+              <div class="field">
+                <b-radio name="status_options" value="0">Pending</b-radio>
+              </div>
+              <div class="field">
+                <b-radio name="status_options" value="1">Active</b-radio>
+                <p class="control">
+                  <div id="activeDateDiv" v-if="status_options == '1'">
+                      Make it lifetime
+                  </div>
+                </p>
+              </div>
+            </b-radio-group>
+          </div>
+
         </div> <!-- end of .column -->
 
         <div class="column">
@@ -64,7 +78,8 @@
       el: '#app',
       data: {
         auto_password: true,
-        rolesSelected: {!! old('roles') ? old('roles') : '[]' !!}
+        rolesSelected: {!! old('roles') ? old('roles') : '[]' !!},
+        status_options: '0'
       }
     });
   </script>

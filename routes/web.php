@@ -57,7 +57,14 @@ Route::post('/checkout', ['as' => 'checkout-post', 'uses' => 'HomeController@pos
 
 //Base user account routes
 Route::get('/your-listings', 'BreederController@viewYourListings')->name('listings');
-Route::get('/account-settings', 'BreederController@accountSettings')->name('settings');
+Route::get('/add-to-directory', function () {
+    return redirect()->route('listings');
+})->name('directory-add');
+Route::post('/add-to-directory','ListingCreator@breedersProcessAdd')->name('directory-add');
+
+
+
+Route::get('/account-settings', 'UserController@accountSettings')->name('settings');
 
 //update user Settings
 Route::post('/update-email', 'UserController@updateAccount')->name('update-account');
@@ -123,3 +130,4 @@ Route::prefix('breeds')->group(function () {
 Route::get('/page-moved', 'RedirectController@index')->name('redirect');
 Route::get('/listing-removed', 'RedirectController@listingremoved')->name('listingremoved');
 Route::get('/member-only', 'RedirectController@notOnline')->name('member-only');
+Route::get('/admin-only', 'RedirectController@notAdmin')->name('admin-only');
