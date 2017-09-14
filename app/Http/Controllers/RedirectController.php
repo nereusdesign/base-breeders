@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Request;
 use Session;
+use Auth;
 
 class RedirectController extends Controller
 {
@@ -22,7 +23,11 @@ class RedirectController extends Controller
   }
 
   public function notAdmin(){
-    return view('redirect.notAdmin');
+      if(Auth::check()){
+        return view('redirect.notAdmin');
+      }else{
+        return redirect()->route('member-only');
+      }
   }
 
 
