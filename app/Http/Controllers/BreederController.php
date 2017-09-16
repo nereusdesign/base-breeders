@@ -15,10 +15,20 @@ use App\Account;
 class BreederController extends Controller
 {
     public function view($url){
-          $info = \App\Breeder::where('breeders.baseurl',$url)->select('breeders.*','zip_code.*','breeds.id as bid','breeds.*')->join('zip_code', 'breeders.zipcode', '=', 'zip_code.zip_code')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->first();
+          $info = \App\Breeder::where('breeders.baseurl',$url)->select('breeders.*','zip_code.*','breeds.id as bid','breeds.url as burl','breeds.breedName')->join('zip_code', 'breeders.zipcode', '=', 'zip_code.zip_code')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->first();
           $pic = \App\breederPictures::where('breeder_id',$info->id)->get();
+          $canEdit = FALSE;
+          $dogarr = array();
+          $catarr = array();
+          if(Auth::check()){
+            if((Auth::user()->hasRole(['superadministrator', 'administrator'])) || (Auth::id() == $info->userId)){
+              $canEdit = TRUE;
+              $dogarr = \App\Breed::where('breedType','dog')->orderBy('breedName')->pluck('breedName','id');
+              $catarr = \App\Breed::where('breedType','cat')->orderBy('breedName')->pluck('breedName','id');
+            }
+          }
           if(!empty($info)){
-            return view('breeder-listing',['info' => $info,'pic' => $pic]);
+            return view('breeder-listing',['dogarr' => $dogarr,'catarr' => $catarr,'info' => $info,'pic' => $pic,'canEdit' => $canEdit]);
           }else{
             //redirect to listing removed page
             return redirect()->route('listingremoved');

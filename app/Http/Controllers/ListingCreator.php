@@ -136,5 +136,43 @@ class ListingCreator extends Controller
 
     }
 
+    public function breederEditListing(Request $request){
+
+        if(Auth::check()){
+              if(is_numeric($request->lid)){
+                if(Auth::user()->hasRole(['superadministrator', 'administrator'])){
+                  $listing = \App\Breeder::where('id', $request->lid)->first();
+                }else{
+                  $userid = Auth::id();
+                  $listing = \App\Breeder::where('id', $request->lid)->where('userId','=','$userid')->first();
+                }
+                if(!empty($listing)){
+                    $baseurl = $isting->baseUrl;
+                  //found the listing, set it and save it
+                    switch ($request->new) {
+                      case 'listingname':
+                      $this->validate($request, [
+                        'listingname' => 'required',
+                      ]);
+                      $listing->breederName = $request->listingname;
+                        break;
+                      default:
+                        return redirect()->route('view-breeder',['url' => $baseurl]);
+                        break;
+                    }
+                    $listing->save();
+                    Session::flash('success', 'Listing updated.');
+                    return redirect()->route('view-breeder',['url' => $baseurl]);
+                }else{
+                  return redirect->route('listingremoved');
+                }
+              }else{
+                return redirect->route('listingremoved');
+              }
+       }else{
+         return redirect->route('member-only');
+       }
+    }
+
 
 }

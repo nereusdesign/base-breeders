@@ -61,7 +61,7 @@ Route::get('/add-to-directory', function () {
     return redirect()->route('listings');
 })->name('directory-add');
 Route::post('/add-to-directory','ListingCreator@breedersProcessAdd')->name('directory-add');
-
+Route::any('/edit-listing','ListingCreator@breederEditListing')->name('breeder-edit-listing');
 
 
 Route::get('/account-settings', 'UserController@accountSettings')->name('settings');

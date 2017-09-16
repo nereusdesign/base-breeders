@@ -67,24 +67,27 @@ blockquote em{
 
 @section('content')
   <div class="container profile m-t-25">
-
+    @if ($canEdit)
+      <h3>Click <i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i> to edit any part of this listing</h3>
+    @endif
           <div class="section profile-heading">
                   <div class="columns">
                           <div class="column is-2">
                                   <div class="image is-128x128 avatar">
+                                          <i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i>
                                           <img src="https://placehold.it/256x256">
                                   </div>
                           </div>
                           <div class="column is-4 name">
                                   <p>
-                                          <span class="title is-bold">{{ $info->breederName }}</span>
+                                          <span class="title is-bold"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i>{{ $info->breederName }}</span>
 
                                   </p>
-                                  <p class="tagline">{{ $info->breedName }} Breeder In {{ $info->city }},{{ $info->state_prefix }}</p>
+                                  <p class="tagline"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i>{{ $info->breedName }} Breeder In {{ $info->city }},{{ $info->state_prefix }}</p>
 
                                     @if (!empty($info->about))
                                       <blockquote>
-                                            {{ $info->about }}
+                                            <i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i>{{ $info->about }}
                                       </blockquote>
                                     @endif
 
@@ -96,14 +99,14 @@ blockquote em{
           <div class="profile-options">
                   <div class="tabs is-fullwidth">
                           <ul>
-                                @if (!empty($info->url))
-                                  <li class="link main-border-bottom-color"><a href="{{ $info->url }}" target="_blank" class="font-color-black"><span class="icon"><i class="fa fa-list"></i></span> <span>Visit Website</span></a>
+                                @if (!empty($info->url) || $canEdit)
+                                  <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a href="{{ $info->url }}" target="_blank" class="font-color-black"><span class="icon"><i class="fa fa-list"></i></span> <span>Visit Website</span></a>
                                   </li>
                                 @endif
-                                  <li class="link main-border-bottom-color"><a class="font-color-black"><span class="icon"><i class="fa fa-heart"></i></span> <span>Send Email</span></a>
+                                  <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a class="font-color-black"><span class="icon"><i class="fa fa-list"></i></span> <span>Send Email</span></a>
                                   </li>
-                                  @if (!empty($info->phone))
-                                    <li class="link main-border-bottom-color"><a><span class="icon"><i class="fa fa-th"></i></span> <span>{{ $info->phone }}</span></a>
+                                  @if (!empty($info->phone) || $canEdit)
+                                    <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a><span class="icon"><i class="fa fa-list"></i></span> <span>{{ $info->phone }}</span></a>
                                     </li>
                                   @endif
 
@@ -123,9 +126,94 @@ blockquote em{
 
           </div>
   </div>
+
+
+  <section class="m-t-75 m-l-100 m-r-100">
+      <b-tabs type="is-boxed is-centered" v-model="activeTab">
+          <b-tab-item label="Available {{ $info->breedName }}">
+            @if ($canEdit)
+              <a class="button is-primary">Add For Sale</a>
+            @endif
+            <h1>Available {{ $info->breedName }}</h1>
+          </b-tab-item>
+          <b-tab-item label="{{ $info->breedName }} Pictures">
+            @if ($canEdit)
+              <a class="button is-primary">Add Pictures</a>
+            @endif
+              <h1>{{ $info->breedName }} Pictures</h1>
+          </b-tab-item>
+
+      </b-tabs>
+  </section>
+  @if ($canEdit)
+    @include('listings.edits')
+  @endif
+
 @endsection
 @section('scripts')
+
+
+
+
+  @if ($canEdit)
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script>
+  $( document ).ready(function() {
+            $( ".editIcon" ).show();
+
+            $('.close-modal').click(function(){
+                $( ".modal" ).hide();
+            });
+
+            $('#editListingname').click(function(){
+                $( "#listingnameEdit" ).toggle();
+            });
+            @if ($errors->has('listingname'))
+              $( "#listingnameEdit" ).show();
+            @endif
+            $('#editBreedLocation').click(function(){
+                $( "#breedLocationEdit" ).toggle();
+            });
+            @if ($errors->has('zipcode') || $errors->has('breed'))
+              $( "#breedLocationEdit" ).show();
+            @endif
+            $('#editAbout').click(function(){
+                $( "#aboutEdit" ).toggle();
+            });
+            @if ($errors->has('about'))
+              $( "#aboutEdit" ).show();
+            @endif
+            $('#editWeb').click(function(){
+                $( "#webEdit" ).toggle();
+            });
+            @if ($errors->has('url'))
+              $( "#webEdit" ).show();
+            @endif
+            $('#editEmail').click(function(){
+                $( "#emailEdit" ).toggle();
+            });
+            @if ($errors->has('email'))
+              $( "#emailEdit" ).show();
+            @endif
+            $('#editPhone').click(function(){
+                $( "#phoneEdit" ).toggle();
+            });
+            @if ($errors->has('phone'))
+              $( "#phoneEdit" ).show();
+            @endif
+  });
+  </script>
+  @endif
+  <script>
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      activeTab: 0,
+    }
+  });
+
+
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
