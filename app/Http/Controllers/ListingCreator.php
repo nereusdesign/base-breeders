@@ -164,13 +164,13 @@ class ListingCreator extends Controller
                     Session::flash('success', 'Listing updated.');
                     return redirect()->route('view-breeder',['url' => $baseurl]);
                 }else{
-                  return redirect->route('listingremoved');
+                  return redirect()->route('listingremoved');
                 }
               }else{
-                return redirect->route('listingremoved');
+                return redirect()->route('listingremoved');
               }
        }else{
-         return redirect->route('member-only');
+         return redirect()->route('member-only');
        }
     }
 

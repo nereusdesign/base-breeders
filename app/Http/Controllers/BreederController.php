@@ -38,7 +38,9 @@ class BreederController extends Controller
     public function viewYourListings(){
       if(Auth::check()){
           if(Auth::user()->accountActive == '1'){
-            return view('listings-dashboard');
+            $dogarr = \App\Breed::where('breedType','dog')->orderBy('breedName')->pluck('breedName','id');
+            $catarr = \App\Breed::where('breedType','cat')->orderBy('breedName')->pluck('breedName','id');
+            return view('listings-dashboard',['dogarr' => $dogarr,'catarr' => $catarr]);
           }else{
             Session::flash('status', 'You must activate your account before you can create a listing.');
             return redirect()->route('checkout');

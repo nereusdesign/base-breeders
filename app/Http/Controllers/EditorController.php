@@ -56,6 +56,6 @@ class EditorController extends Controller
             ]);
             $urlbase = make_base_url(substr($request->title,0,50)." ".$post->id);
             DB::table('posts')->where('id',$post->id)->update(['urlBase' => $urlbase]);
-            return view('view-article',['post' => $post]);
+            return view('view-article',['article' => $post]);
       }
 }

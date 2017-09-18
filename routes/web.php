@@ -131,3 +131,22 @@ Route::get('/page-moved', 'RedirectController@index')->name('redirect');
 Route::get('/listing-removed', 'RedirectController@listingremoved')->name('listingremoved');
 Route::get('/member-only', 'RedirectController@notOnline')->name('member-only');
 Route::get('/admin-only', 'RedirectController@notAdmin')->name('admin-only');
+
+//Handle images stored in storage
+Route::get('storage/{filename}', function ($filename)
+{
+    $path = storage_path('public/' . $filename);
+
+    if (!File::exists($path)) {
+        //change this later to get the default image
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
