@@ -22,19 +22,22 @@ class SearchController extends Controller
 
 
   public function findcatbreeder(){
-    $catarr = DB::table('breeds')->select('breedType','breedName','id')->where('breedType','=','cat')->orderBy('breedName','asc')->get();
+    $catarr = DB::table('breeds')->select('breedType','breedName','id','url')->where('breedType','=','cat')->orderBy('breedName','asc')->get();
     foreach ($catarr as $value) {
       $breeds[$value->id] = $value->breedName;
+      $links[$value->id] = $value->url;
     }
-    return view('find-cat-breeders', ['breeds' => $breeds]);
+    return view('find-cat-breeders', ['breeds' => $breeds,'links' => $links]);
   }
 
   public function finddogbreeder(){
-    $catarr = DB::table('breeds')->select('breedType','breedName','id')->where('breedType','=','dog')->orderBy('breedName','asc')->get();
+    $catarr = DB::table('breeds')->select('breedType','breedName','id','url')->where('breedType','=','dog')->orderBy('breedName','asc')->get();
     foreach ($catarr as $value) {
       $breeds[$value->id] = $value->breedName;
+      $links[$value->id] = $value->url;
     }
-    return view('find-dog-breeders', ['breeds' => $breeds]);
+    return view('find-dog-breeders', ['breeds' => $breeds,'links' => $links]);
+
   }
 
   public function findallbreeder(){
@@ -50,29 +53,22 @@ class SearchController extends Controller
   }
 
     public function allByBreed($url){
-          $breeddetails = \App\Breed::where('url', $url)->first();
+          $urlclean = str_replace('-breeders','',$url);
+          $breeddetails = \App\Breed::where('url', $urlclean)->first();
           if(!empty($breeddetails)){
             $breeders = \App\Breeder::where('breedId',$breeddetails->id)->get();
-            if(empty($breeders)){
-              //none
-              $hasbreeders = false;
-            }else{
-              //check for pictures
-              $hasbreeders = true;
+              $picture = null;
               foreach($breeders as $b){
                 $getpic = null;
                 $bid = $b->id;
                 $getpic = \App\breederPictures::where([['isMain','=',$bid],['isMain','=','1']])->first();
                 if(!empty($getpic)){
                   $picture[$bid] = $getpic->filename;
+                }else{
+                  $picture[$bid] = 'default';
                 }
               }
-              if($hasbreeders){
-                return view('search-results',['hasresults' => '1','breed' => $breeddetails,'breeders' => $breeders,'pictures' => $picture]);
-              }else{
-                return view('search-results',['hasresults' => '0','breed' => $breeddetails]);
-              }
-            }
+                return view('search-results',['hasresults' => '1','info' => $breeddetails,'breeders' => $breeders,'pictures' => $picture]);
           }else{
             return redirect()->route('listingremoved');
           }
@@ -104,28 +100,24 @@ class SearchController extends Controller
             }else{
               $breeders = \App\Breeder::where('breedId',$breeddetails->id)->get();
             }
-            if(count($breeders)){
-                  //check for pictures
-                  $hasbreeders = true;
-                  $picture = null;
-                  foreach($breeders as $b){
-                      $getpic = null;
-                      $bid = $b->id;
-                      $getpic = \App\breederPictures::where([['isMain','=',$bid],['isMain','=','1']])->first();
-                      if(count($getpic)){
-                        $picture[$bid] = $getpic->filename;
-                      }else{
-                        $picture[$bid] = 'no-picture';
-                      }
-                  }
-            }else{
-              $hasbreeders = false;
-            }
-            if($hasbreeders){
-                return view('search-results',['hasresults' => '1','breed' => $breeddetails,'breeders' => $breeders,'pictures' => $picture]);
+
+
+            $picture = null;
+            foreach($breeders as $b){
+              $getpic = null;
+              $bid = $b->id;
+              $getpic = \App\breederPictures::where([['isMain','=',$bid],['isMain','=','1']])->first();
+              if(!empty($getpic)){
+                $picture[$bid] = $getpic->filename;
               }else{
-                return view('search-results',['hasresults' => '0','breed' => $breeddetails]);
+                $picture[$bid] = 'default';
               }
+            }
+            return view('search-results',['hasresults' => '1','info' => $breeddetails,'breeders' => $breeders,'pictures' => $picture]);
+
+
+
+
           }else{
             return redirect()->route('listingremoved');
           }

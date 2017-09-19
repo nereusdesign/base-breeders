@@ -39,7 +39,7 @@ class UploadRequest extends FormRequest
             'email' => 'required|email',
             'breed' => 'required|numeric|exists:breeds,id',
             'zipcode' => 'required|exists:zip_code,zip_code',
-            'phone' => 'numeric|phone',
+            'phone' => 'nullable|numeric|phone',
             'user' => 'required|numeric|exists:users,id'
         ];
       }else{
@@ -48,7 +48,7 @@ class UploadRequest extends FormRequest
             'email' => 'required|email',
             'breed' => 'required|exists:breeds,id',
             'zipcode' => 'required|exists:zip_code,zip_code',
-            'phone' => 'numeric|phone'
+            'phone' => 'nullable|numeric|phone'
         ];
       }
       $photos = count($this->input('photos'));

@@ -83,7 +83,7 @@ Route::post('/find-dog-breeder','SearchController@FindBreeders')->name('dog-sear
 Route::post('/find-breeders','SearchController@FindBreeders')->name('breeder-search');
 Route::get('/view-breeder/{url}', ['as' => 'view-breeder','uses' =>'BreederController@view']);
 Route::get('/breed-info/{url}', ['as' => 'breed-info','uses' =>'BreedsController@listing']);
-Route::get('/find/{url}/breeders', ['uses' =>'SearchController@allByBreed']);
+Route::get('/find/{url}', ['uses' =>'SearchController@allByBreed']);
 
 //Admin Routes
 Route::prefix('manage')->middleware('role:superadministrator|administrator')->group(function () {

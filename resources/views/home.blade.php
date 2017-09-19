@@ -45,7 +45,7 @@
 
                 <p class="has-text-centered">
                   <a class="button is-large">
-                    <i class="fa fa-search" aria-hidden="true"></i>Search
+                    <i class="fa fa-search m-r-10" aria-hidden="true"></i>Search
                   </a>
                 </p>
               </div>

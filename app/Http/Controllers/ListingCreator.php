@@ -151,11 +151,42 @@ class ListingCreator extends Controller
                   //found the listing, set it and save it
                     switch ($request->new) {
                       case 'listingname':
+                          $this->validate($request, [
+                            'listingname' => 'required',
+                          ]);
+                          $listing->breederName = $request->listingname;
+                      break;
+                      case 'breedLocation':
                       $this->validate($request, [
-                        'listingname' => 'required',
+                        'breed' => 'required|numeric|exists:breeds,id',
+                        'zipcode' => 'required|exists:zip_code,zip_code'
                       ]);
-                      $listing->breederName = $request->listingname;
-                        break;
+                        $listing->breedId = $request->breed;
+                        $listing->zipcode = $request->zipcode;
+                      break;
+                      case 'about':
+                        $listing->about = $request->about;
+                      break;
+                      case 'url':
+                        $listing->url = addScheme($request->url);
+                      break;
+                      case 'email':
+                        $this->validate($request, [
+                          'email' => 'required|email'
+                        ]);
+                        $listing->email = addScheme($request->email);
+                      break;
+                      case 'phone':
+                        $this->validate($request, [
+                          'phone' => 'nullable|numeric|phone'
+                        ]);
+                        if(!empty($request->phone)){
+                          $phone = formatPhoneNumber($request->phone);
+                        }else{
+                          $phone = "";
+                        }
+                        $listing->phone = $phone;
+                      break;
                       default:
                         return redirect()->route('view-breeder',['url' => $baseurl]);
                         break;

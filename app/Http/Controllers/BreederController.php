@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Breeder;
 use App\breederPictures;
 use Auth;
+use DB;
 use Session;
+use Storage;
 use App\User;
 use App\Breed;
 use App\Account;
@@ -14,26 +16,37 @@ use App\Account;
 
 class BreederController extends Controller
 {
-    public function view($url){
-          $info = \App\Breeder::where('breeders.baseurl',$url)->select('breeders.*','zip_code.*','breeds.id as bid','breeds.url as burl','breeds.breedName')->join('zip_code', 'breeders.zipcode', '=', 'zip_code.zip_code')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->first();
-          $pic = \App\breederPictures::where('breeder_id',$info->id)->get();
-          $canEdit = FALSE;
-          $dogarr = array();
-          $catarr = array();
-          if(Auth::check()){
-            if((Auth::user()->hasRole(['superadministrator', 'administrator'])) || (Auth::id() == $info->userId)){
-              $canEdit = TRUE;
-              $dogarr = \App\Breed::where('breedType','dog')->orderBy('breedName')->pluck('breedName','id');
-              $catarr = \App\Breed::where('breedType','cat')->orderBy('breedName')->pluck('breedName','id');
-            }
+  public function view($url){
+    $mainpic = null;
+    $info = \App\Breeder::where('breeders.baseurl',$url)->select('breeders.*','zip_code.*','breeds.id as bid','breeds.url as burl','breeds.breedName')->join('zip_code', 'breeders.zipcode', '=', 'zip_code.zip_code')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->first();
+
+
+
+      $pic = \App\breederPictures::where('breeder_id',$info->id)->get();
+      if(!empty($pic)){
+        foreach($pic as $p){
+          if ($p->isMain == '1') {
+            $mainpic = Storage::url($p->filename);
           }
-          if(!empty($info)){
-            return view('breeder-listing',['dogarr' => $dogarr,'catarr' => $catarr,'info' => $info,'pic' => $pic,'canEdit' => $canEdit]);
-          }else{
-            //redirect to listing removed page
-            return redirect()->route('listingremoved');
-          }
-    }
+        }
+      }
+      if(($mainpic == null) || (!file_exists($mainpic))){
+        $mainpic = Storage::url('photos/default.png');
+      }
+      $canEdit = FALSE;
+      $dogarr = array();
+      $catarr = array();
+      if(Auth::check()){
+        if((Auth::user()->hasRole(['superadministrator', 'administrator'])) || (Auth::id() == $info->userId)){
+          $canEdit = TRUE;
+          $dogarr = \App\Breed::where('breedType','dog')->orderBy('breedName')->pluck('breedName','id');
+          $catarr = \App\Breed::where('breedType','cat')->orderBy('breedName')->pluck('breedName','id');
+        }
+      }
+
+      return view('breeder-listing',['dogarr' => $dogarr,'catarr' => $catarr,'info' => $info,'pic' => $pic,'canEdit' => $canEdit,'mainpic' => $mainpic]);
+
+  }
 
     public function viewYourListings(){
       if(Auth::check()){

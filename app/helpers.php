@@ -5,8 +5,12 @@
     //custom function to add htpp to urls
        function addScheme($url, $scheme = 'http://')
             {
+                if(empty($url)){
+                  return '';
+                }else{
               return parse_url($url, PHP_URL_SCHEME) === null ?
                 $scheme . $url : $url;
+              }
             }
 
        function formatPhoneNumber($phoneNumber) {

@@ -48,6 +48,19 @@
     </div>
   </div>
 
+  <section style="width:100%;padding:20px;background-color:white">
+    <h2 class="title is-primary">Find Breeders By Dog Breed</h2>
+    <div class="neat-columns">
+      <ul>
+      @foreach ($breeds as $key => $value)
+        <li>
+          <a href="{{url('find/'.$links[$key].'-breeders')}}">{{$value}}</a>
+        <li>
+      @endforeach
+     </ul>
+    </div>
+  </section>
+
 @endsection
 @section('scripts')
   <script>

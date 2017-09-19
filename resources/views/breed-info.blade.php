@@ -45,7 +45,7 @@
                                                           </td>
                                                         </tr>
                                                         <tr class="no-hover"><td>
-                                                            <a href="{{url('find-'.$info->url.'-breeders')}}" class="button is-info is-fullwidth">Find {{ $info->breedName }} Breeders</a>
+                                                            <a href="{{url('find/'.$info->url.'-breeders')}}" class="button is-info is-fullwidth">Find {{ $info->breedName }} Breeders</a>
                                                         </td></tr>
                                                   </tbody>
                                                </table>

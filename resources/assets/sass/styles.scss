@@ -102,3 +102,29 @@
 .zip-code{
   width:100px;
 }
+
+
+.neat-columns {
+    -moz-column-width: 11.5em;
+    -webkit-column-width: 11.5em;
+    column-width: 11.5em;
+}
+.neat-columns ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.neat-columns ul li{
+    float: none;
+    margin: 0px;
+    padding: 3px;
+    border:0px;
+}
+
+.neat-columns ul li a:hover{
+    color:blue;
+}
+
+.neat-columns ul li:first-child {
+    margin-top: 0;
+}
