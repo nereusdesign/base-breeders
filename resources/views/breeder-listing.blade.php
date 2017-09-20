@@ -65,7 +65,7 @@ blockquote em{
 
 @if ($canEdit)
 .editIcon{
-  display:block;
+  display:inline;
 }
 @else
 .editIcon{
@@ -84,20 +84,20 @@ blockquote em{
                   <div class="columns">
                           <div class="column is-2">
                                   <div class="image is-128x128 avatar">
-                                          <i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i>
-                                          <img src="{{$mainpic}}">
+                                          <i class="fa fa-pencil-square-o is-hover editIcon" id="editListingPic"></i>
+                                          <img src="{{asset($mainpic)}}">
                                   </div>
                           </div>
                           <div class="name">
                                   <p>
-                                          <span class="title is-bold"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i>{{ $info->breederName }}</span>
+                                          <span class="title is-bold"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true" id="editListingname"></i>{{ $info->breederName }}</span>
 
                                   </p>
-                                  <p class="tagline"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i>{{ $info->breedName }} Breeder In {{ $info->city }},{{ $info->state_prefix }}</p>
+                                  <p class="tagline"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true" id="editBreedLocation"></i>{{ $info->breedName }} Breeder In {{ $info->city }},{{ $info->state_prefix }}</p>
 
                                     @if (!empty($info->about))
                                       <blockquote>
-                                            <i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i>{{ $info->about }}
+                                            <i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true" id="editAbout"></i>{{ $info->about }}
                                       </blockquote>
                                     @endif
 
@@ -110,13 +110,13 @@ blockquote em{
                   <div class="tabs is-fullwidth">
                           <ul>
                                 @if (!empty($info->url) || $canEdit)
-                                  <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a href="{{ $info->url }}" target="_blank" class="font-color-black"><span class="icon"><i class="fa fa-globe"></i></span> <span>Visit Website</span></a>
+                                  <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true" id="editWeb"></i><a href="{{ $info->url }}" target="_blank" class="font-color-black"><span class="icon"><i class="fa fa-globe"></i></span> <span>Visit Website</span></a>
                                   </li>
                                 @endif
-                                  <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a class="font-color-black"><span class="icon"><i class="fa fa-envelope"></i></span> <span>Send Email</span></a>
+                                  <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a class="font-color-black"><span class="icon"><i class="fa fa-envelope" id="editEmail"></i></span> <span>Send Email</span></a>
                                   </li>
                                   @if (!empty($info->phone) || $canEdit)
-                                    <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a><span class="icon"><i class="fa fa-phone"></i></span> <span>{{ $info->phone }}</span></a>
+                                    <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a><span class="icon"><i class="fa fa-phone" id="editPhone"></i></span> <span>{{ $info->phone }}</span></a>
                                     </li>
                                   @endif
 

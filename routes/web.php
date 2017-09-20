@@ -99,6 +99,9 @@ Route::prefix('manage')->middleware('role:superadministrator|administrator')->gr
       Route::post('/add','ListingCreator@manageBreedersProcessAdd')->name('manage.breeders.process.add');
       Route::get('/','ManageController@breedersView');
   });
+  Route::prefix('breeds')->group(function () {
+    Route::post('/add-new-breed', 'BreedsController@processAdd')->name('manage.breeds.processadd');
+  });
 });
 
 Route::prefix('editor')->middleware('role:superadministrator|administrator|editor')->group(function () {
@@ -131,22 +134,3 @@ Route::get('/page-moved', 'RedirectController@index')->name('redirect');
 Route::get('/listing-removed', 'RedirectController@listingremoved')->name('listingremoved');
 Route::get('/member-only', 'RedirectController@notOnline')->name('member-only');
 Route::get('/admin-only', 'RedirectController@notAdmin')->name('admin-only');
-
-//Handle images stored in storage
-Route::get('storage/{filename}', function ($filename)
-{
-    $path = storage_path('public/' . $filename);
-
-    if (!File::exists($path)) {
-        //change this later to get the default image
-        abort(404);
-    }
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-});

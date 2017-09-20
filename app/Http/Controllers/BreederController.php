@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Storage;
 use App\Breeder;
 use App\breederPictures;
 use Auth;
 use DB;
 use Session;
-use Storage;
 use App\User;
 use App\Breed;
 use App\Account;
+use App\File;
 
 
 class BreederController extends Controller
@@ -26,12 +27,12 @@ class BreederController extends Controller
       if(!empty($pic)){
         foreach($pic as $p){
           if ($p->isMain == '1') {
-            $mainpic = Storage::url($p->filename);
+            $mainpic = 'storage/'.$p->filename;
           }
         }
       }
       if(($mainpic == null) || (!file_exists($mainpic))){
-        $mainpic = Storage::url('photos/default.png');
+        $mainpic = 'storage/photos/default.jpg';
       }
       $canEdit = FALSE;
       $dogarr = array();
@@ -62,6 +63,7 @@ class BreederController extends Controller
         return redirect()->route('member-only');
       }
     }
+
 
 
 }

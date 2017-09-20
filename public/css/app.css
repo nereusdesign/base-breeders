@@ -14376,3 +14376,11 @@ nav.navbar {
   margin-top: 0;
 }
 
+.breeder-result-img {
+  max-height: 150px !important;
+  width: auto !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  display: block !important;
+}
+

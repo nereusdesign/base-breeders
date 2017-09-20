@@ -55,17 +55,17 @@ class SearchController extends Controller
     public function allByBreed($url){
           $urlclean = str_replace('-breeders','',$url);
           $breeddetails = \App\Breed::where('url', $urlclean)->first();
-          if(!empty($breeddetails)){
+          if($breeddetails){
             $breeders = \App\Breeder::where('breedId',$breeddetails->id)->get();
               $picture = null;
               foreach($breeders as $b){
                 $getpic = null;
                 $bid = $b->id;
-                $getpic = \App\breederPictures::where([['isMain','=',$bid],['isMain','=','1']])->first();
-                if(!empty($getpic)){
-                  $picture[$bid] = $getpic->filename;
+                $getpic = \App\breederPictures::where([['breeder_id','=',$bid],['isMain','=','1']])->first();
+                if($getpic){
+                  $picture[$bid] = 'storage/'.$getpic->filename;
                 }else{
-                  $picture[$bid] = 'default';
+                  $picture[$bid] = 'storage/photos/default.jpg';
                 }
               }
                 return view('search-results',['hasresults' => '1','info' => $breeddetails,'breeders' => $breeders,'pictures' => $picture]);
@@ -91,7 +91,7 @@ class SearchController extends Controller
       }
           $breeddetails = \App\Breed::where('id', $request->breed)->first();
 
-          if(count($breeddetails)){
+          if($breeddetails){
             if($byloc){
               $loc = DB::table('zip_code')->where('zip_code',$request->zip)->first();
               $lat = $loc->lat;
@@ -106,11 +106,11 @@ class SearchController extends Controller
             foreach($breeders as $b){
               $getpic = null;
               $bid = $b->id;
-              $getpic = \App\breederPictures::where([['isMain','=',$bid],['isMain','=','1']])->first();
-              if(!empty($getpic)){
-                $picture[$bid] = $getpic->filename;
+              $getpic = \App\breederPictures::where([['breeder_id','=',$bid],['isMain','=','1']])->first();
+              if($getpic){
+                $picture[$bid] = 'storage/'.$getpic->filename;
               }else{
-                $picture[$bid] = 'default';
+                $picture[$bid] = 'storage/photos/default.jpg';
               }
             }
             return view('search-results',['hasresults' => '1','info' => $breeddetails,'breeders' => $breeders,'pictures' => $picture]);

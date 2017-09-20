@@ -58,10 +58,10 @@ class ListingCreator extends Controller
 
                         if(!empty($request->photos)){
                           foreach ($request->photos as $photo) {
-                            $filename = $photo->store('photos');
+                            $filename = $photo->store('public/photos');
                             \App\breederPictures::create([
                               'breeder_id' => $breeder->id,
-                              'filename' => $filename,
+                              'filename' => str_replace('public/'.'',$filename),
                               'isMain' => $isMain
                             ]);
                             if($isMain == '1'){
@@ -115,10 +115,10 @@ class ListingCreator extends Controller
 
         if(!empty($request->photos)){
             foreach ($request->photos as $photo) {
-                $filename = $photo->store('photos');
+                $filename = $photo->store('public/photos');
                 \App\breederPictures::create([
                     'breeder_id' => $breeder->id,
-                    'filename' => $filename,
+                    'filename' => str_replace('public/'.'',$filename),
                     'isMain' => $isMain
                 ]);
                 if($isMain == '1'){
@@ -147,7 +147,7 @@ class ListingCreator extends Controller
                   $listing = \App\Breeder::where('id', $request->lid)->where('userId','=','$userid')->first();
                 }
                 if(!empty($listing)){
-                    $baseurl = $isting->baseUrl;
+                    $baseurl = $listing->baseUrl;
                   //found the listing, set it and save it
                     switch ($request->new) {
                       case 'listingname':

@@ -30,7 +30,7 @@
                 <div class="columns">
                         <div class="column is-4">
                                 <div class="image">
-                                        <img src="{{asset('images/breed-information/'.$info->breedType.'-pictures/'.$info->picture)}}" alt="{{ addslashes($info->breedName) }}">
+                                        <img src="{{asset($pictures[$value->id])}}" alt="{{ addslashes($value->breederName) }}" class="breeder-result-img">
                                         <a href="{{url('/view-breeder/'.$value->baseUrl)}}" class="button is-success is-outlined is-fullwidth m-t-10 m-b-10" target="_blank">View {{ $value->breederName }} Profile</a>
                                         <a href="#" class="button is-success is-outlined is-fullwidth">Contact {{ $value->breederName }}</a>
                                 </div>

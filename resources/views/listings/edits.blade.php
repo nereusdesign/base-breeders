@@ -5,8 +5,8 @@
       <p class="modal-card-title">Change Kennel/Cattery Name</p>
       <button class="delete close-modal" aria-label="close"></button>
     </header>
+    <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
     <section class="modal-card-body">
-      <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
         {{csrf_field()}}
         <input type="hidden" name="new" value="listingname">
         <input type="hidden" name="lid" value="{{$info->id}}">
@@ -21,10 +21,10 @@
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-primary">Save changes</button>
-    </form>
+      <input type="submit" value="Save Changes" class="button is-primary">
       <button class="button close-modal">Cancel</button>
     </footer>
+    </form>
   </div>
 </div>
 
@@ -36,8 +36,8 @@
       <p class="modal-card-title">Change Breed &amp; Location</p>
       <button class="delete close-modal" aria-label="close"></button>
     </header>
+          <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
     <section class="modal-card-body">
-      <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
         {{csrf_field()}}
         <input type="hidden" name="new" value="breedLocation">
         <input type="hidden" name="lid" value="{{$info->id}}">
@@ -72,10 +72,10 @@
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-primary">Save changes</button>
-    </form>
+      <input type="submit" value="Save Changes" class="button is-primary">
       <button class="button close-modal">Cancel</button>
     </footer>
+    </form>
   </div>
 </div>
 
@@ -86,8 +86,8 @@
       <p class="modal-card-title">Edit About Information</p>
       <button class="delete close-modal" aria-label="close"></button>
     </header>
+    <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
     <section class="modal-card-body">
-      <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
         {{csrf_field()}}
         <input type="hidden" name="new" value="about">
         <input type="hidden" name="lid" value="{{$info->id}}">
@@ -102,10 +102,10 @@
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-primary">Save changes</button>
-    </form>
+      <input type="submit" value="Save Changes" class="button is-primary">
       <button class="button close-modal">Cancel</button>
     </footer>
+    </form>
   </div>
 </div>
 
@@ -116,8 +116,8 @@
       <p class="modal-card-title">Change Web Address</p>
       <button class="delete close-modal" aria-label="close"></button>
     </header>
+    <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
     <section class="modal-card-body">
-      <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
         {{csrf_field()}}
         <input type="hidden" name="new" value="website">
         <input type="hidden" name="lid" value="{{$info->id}}">
@@ -133,10 +133,10 @@
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-primary">Save changes</button>
-    </form>
+      <input type="submit" value="Save Changes" class="button is-primary">
       <button class="button close-modal">Cancel</button>
     </footer>
+    </form>
   </div>
 </div>
 
@@ -147,8 +147,8 @@
       <p class="modal-card-title">Change Email</p>
       <button class="delete close-modal" aria-label="close"></button>
     </header>
+    <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
     <section class="modal-card-body">
-      <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
         {{csrf_field()}}
         <input type="hidden" name="new" value="email">
         <input type="hidden" name="lid" value="{{$info->id}}">
@@ -163,10 +163,10 @@
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-primary">Save changes</button>
-    </form>
+      <input type="submit" value="Save Changes" class="button is-primary">
       <button class="button close-modal">Cancel</button>
     </footer>
+    </form>
   </div>
 </div>
 
@@ -177,8 +177,8 @@
       <p class="modal-card-title">Change Phone Number</p>
       <button class="delete close-modal" aria-label="close"></button>
     </header>
+    <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
     <section class="modal-card-body">
-      <form action="{{route('breeder-edit-listing')}}" method="POST" role="form">
         {{csrf_field()}}
         <input type="hidden" name="new" value="phone">
         <input type="hidden" name="lid" value="{{$info->id}}">
@@ -194,9 +194,9 @@
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-primary">Save changes</button>
-    </form>
+      <input type="submit" value="Save Changes" class="button is-primary">
       <button class="button close-modal">Cancel</button>
     </footer>
+    </form>
   </div>
 </div>
