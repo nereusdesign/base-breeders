@@ -76,3 +76,19 @@ $widthspaceamounts: (25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300); /
       width: #{$space}px;
     }
 }
+
+//zoom for checkboxes
+.checkbox-big{
+  zoom: 1;
+  transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  margin: 4px;
+}

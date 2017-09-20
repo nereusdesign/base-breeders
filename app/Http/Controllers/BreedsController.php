@@ -16,8 +16,8 @@ class BreedsController extends Controller
     public function view()
     {
       //get all the breeds so view breeds can list it
-      $dogarr = \App\Breed::where('breedType','dog')->select('breedName','id')->orderBy('breedName')->get();
-      $catarr = \App\Breed::where('breedType','cat')->select('breedName','id')->orderBy('breedName')->get();
+      $dogarr = \App\Breed::where('breedType','dog')->orderBy('breedName')->get();
+      $catarr = \App\Breed::where('breedType','cat')->orderBy('breedName')->get();
       return view('view-breeds',['dogs' => $dogarr,'cats' => $catarr]);
     }
 
@@ -132,6 +132,7 @@ class BreedsController extends Controller
                           'sheddingStars' => 'required|numeric|digits_between:1,5',
                           'vocalizationStars' => 'required|numeric|digits_between:1,5',
                         ]);
+                        $folder = 'dog-pictures';
                         break;
                         case "cat":
                         $this->validate($request, [
@@ -156,6 +157,7 @@ class BreedsController extends Controller
                           'affectionateStars' => 'required|numeric|digits_between:1,5',
                           'playfulnessStars' => 'required|numeric|digits_between:1,5',
                         ]);
+                        $folder = 'cat-pictures';
                         break;
                         default:
                           return redirect()->route('breeds.view');
@@ -203,10 +205,15 @@ class BreedsController extends Controller
                   'url' => time()
                 ]);
 
+
+                  $realurl = make_base_url($breed->breedName.' '.$breed->id);
+                  $path = $request->file('photos')->storeAs('breed-information/'.$folder,$realurl,'breeds');
+                  $imgname = str_replace('breed-information/'.$folder,'',$path);
                   $breed->lifeSpan = $breed->lifespan($request->minlife,$request->maxlife);
                   $breed->height = $breed->height($request->minheight,$request->maxheight);
                   $breed->weight = $breed->weight($request->minweight,$request->maxweight);
-                  $breed->url = make_base_url($breed->breedName.' '.$breed->id);
+                  $breed->url = $realurl;
+                  $breed->picture = $imgname;
                   $breed->save();
                   return redirect()->route('breeds.view');
 

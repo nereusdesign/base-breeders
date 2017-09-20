@@ -58,6 +58,10 @@ return [
             'driver' => 'local',
             'root' => public_path().'/breeders',
         ],
+        'breeds' => [
+            'driver' => 'local',
+            'root' => public_path().'/images',
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_KEY'),

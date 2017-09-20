@@ -15,15 +15,10 @@ class UploadRequest extends FormRequest
     public function authorize()
     {
       if(Auth::check()){
-          if(Auth::user()->hasRole(['breeder','superadministrator', 'administrator'])){
-              return true;
-          }else{
-              return false;
-          }
+        return true;
       }else{
         return false;
       }
-
     }
 
     /**

@@ -45,7 +45,7 @@ class BreederController extends Controller
         }
       }
 
-      return view('breeder-listing',['dogarr' => $dogarr,'catarr' => $catarr,'info' => $info,'pic' => $pic,'canEdit' => $canEdit,'mainpic' => $mainpic]);
+      return view('breeder-listing',['dogarr' => $dogarr,'catarr' => $catarr,'info' => $info,'pic' => $pic,'canEdit' => $canEdit,'mainpic' => $mainpic,'thisurl' => $url]);
 
   }
 

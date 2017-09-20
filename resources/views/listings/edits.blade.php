@@ -200,3 +200,86 @@
     </form>
   </div>
 </div>
+
+
+<div class="modal" id='pictureEdit'>
+  <div class="modal-background"></div>
+  <div class="modal-card m-t-20">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Update Listing Picture</p>
+      <button class="delete close-modal" aria-label="close"></button>
+    </header>
+    <form action="{{route('breeder-edit-listing')}}" method="POST" role="form" enctype="multipart/form-data">
+    <section class="modal-card-body">
+        {{csrf_field()}}
+        <input type="hidden" name="new" value="picture">
+        <input type="hidden" name="lid" value="{{$info->id}}">
+        <div class="field">
+          <label>
+          <input class="checkbox-big" type="checkbox" name="setdefault" id="setdefault" value="yes">
+          Set Picture To "Find Your Breeder" The Logo
+          </label>
+          <div class=" is-muted">Check if you wish to change your picture to our logo/default picture instead of using a picture of your own</div>
+        </div>
+        <hr>
+        <div class="file" id="newpicfile">
+          <label for="photos" class="label">Set New Picture</label>
+          <p class="control">
+              <input class="file-input non-default" type="file" name="photos" />
+          </p>
+          @if ($errors->has('photos'))
+            <p class="help is-danger">{{$errors->first('photos')}}</p>
+          @endif
+        </div>
+        @if ( strpos($mainpic, 'default.jpg') === FALSE )
+          <div class="field non-default">
+            <label>
+            <input class="checkbox-big" type="checkbox" name="savepicture" id="savepicture" value="yes" checked>
+            Save this picture
+            </label>
+            <div class="is-muted">Check to use the new picture as your logo, but also save and show your current picture under your additional pictures</div>
+          </div>
+        @endif
+    </section>
+    <footer class="modal-card-foot">
+      <input type="submit" value="Save Changes" class="button is-primary">
+      <button class="button close-modal">Cancel</button>
+    </footer>
+    </form>
+  </div>
+</div>
+
+
+
+<div class="modal" id='pictureAdd'>
+  <div class="modal-background"></div>
+  <div class="modal-card m-t-20">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Add Pictures To This Listing</p>
+      <button class="delete close-modal" aria-label="close"></button>
+    </header>
+    <form action="{{route('breeder-edit-listing-add')}}" method="POST" role="form" enctype="multipart/form-data">
+    <section class="modal-card-body">
+        {{csrf_field()}}
+        <input type="hidden" name="lid" value="{{$info->id}}">
+        <div class="file" id="additionalPicture">
+          <label for="photos" class="label">Add Picture(s)<div class="is-muted">Max: 10 Pictures At One Time</div></label>
+
+            <button class="add_field_button button is-info is-small">Add Another Picture</button>
+            <div class="input_fields_wrap">
+            <div class="control">
+                <input class="file-input" type="file" name="pictures[]" />
+            </div>
+          </div>
+          @if ($errors->has('pictures'))
+            <p class="help is-danger">{{$errors->first('pictures')}}</p>
+          @endif
+        </div>
+    </section>
+    <footer class="modal-card-foot">
+      <input type="submit" value="Upload All Pictures" class="button is-primary">
+      <button class="button close-modal">Cancel</button>
+    </footer>
+    </form>
+  </div>
+</div>

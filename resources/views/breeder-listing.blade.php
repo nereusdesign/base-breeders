@@ -80,11 +80,17 @@ blockquote em{
     @if ($canEdit)
       <h3>Click <i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i> to edit any part of this listing</h3>
     @endif
+    @if(Session::has('status'))
+          <p class="help is-danger is-font-16">{{ Session::get('status') }}</p>
+    @endif
+    @if(Session::has('success'))
+          <p class="help is-success is-font-16">{{ Session::get('success') }}</p>
+    @endif
           <div class="section profile-heading">
                   <div class="columns">
                           <div class="column is-2">
                                   <div class="image is-128x128 avatar">
-                                          <i class="fa fa-pencil-square-o is-hover editIcon" id="editListingPic"></i>
+                                          <i class="fa fa-pencil-square-o is-hover editIcon" id="editPicture"></i>
                                           <img src="{{asset($mainpic)}}">
                                   </div>
                           </div>
@@ -142,13 +148,14 @@ blockquote em{
       <b-tabs type="is-boxed is-centered" v-model="activeTab">
           <b-tab-item label="Available {{ $info->breedName }}">
             @if ($canEdit)
-              <a class="button is-primary">Add For Sale</a>
+              <a href="{{route('add-available',['url' => $thisurl])}}" class="button is-primary">Add For Sale</a>
+
             @endif
             <h1>Available {{ $info->breedName }}</h1>
           </b-tab-item>
           <b-tab-item label="{{ $info->breedName }} Pictures">
             @if ($canEdit)
-              <a class="button is-primary">Add Pictures</a>
+              <button id="addPicture" class="button is-primary">Add Pictures</button>
             @endif
               <h1>{{ $info->breedName }} Pictures</h1>
           </b-tab-item>
@@ -171,7 +178,8 @@ blockquote em{
   $( document ).ready(function() {
             $( ".editIcon" ).show();
 
-            $('.close-modal').click(function(){
+            $('.close-modal').click(function(e){
+                e.preventDefault();
                 $( ".modal" ).hide();
             });
 
@@ -211,6 +219,53 @@ blockquote em{
             @if ($errors->has('phone'))
               $( "#phoneEdit" ).show();
             @endif
+            $('#editPicture').click(function(){
+                $( "#pictureEdit" ).toggle();
+            });
+            @if ($errors->has('photos'))
+              $( "#pictureEdit" ).show();
+            @endif
+
+            $('#addPicture').click(function(){
+                $( "#pictureAdd" ).toggle();
+            });
+            @if ($errors->has('pictures'))
+              $( "#pictureAdd" ).show();
+            @endif
+
+
+
+            $('#setdefault').click(function(){
+                if($('input[name="setdefault"]').is(':checked')){
+                  $( ".non-default" ).prop('disabled',true);
+                  $(" #newpicfile").hide();
+                }else{
+                  $(" #newpicfile").show();
+                  $( ".non-default" ).prop('disabled',false);
+                }
+            });
+
+            var max_fields = 10;
+            var x = 1;
+            $('.add_field_button').click(function(e) {
+              e.preventDefault();
+              if(x < max_fields){
+                x++;
+                if(x >= max_fields){
+                  $('.add_field_button').hide();
+                }
+                $('.input_fields_wrap').append('<div class="control"><input class="file-input" type="file" name="pictures[]" /><a href="#" class="remove_field">Remove</a></div>')
+              }
+            });
+            $('.input_fields_wrap').on("click",".remove_field",function(e){
+              e.preventDefault();
+              $(this).parent('div').remove();
+              x--;
+              if(x < max_fields){
+                $('.add_field_button').show();
+              }
+            });
+
   });
   </script>
   @endif

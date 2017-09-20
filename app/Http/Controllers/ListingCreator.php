@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UploadRequest;
+use App\Http\Requests\UploadPicturesRequest;
 use Auth;
 use Session;
 use App\User;
@@ -84,6 +85,12 @@ class ListingCreator extends Controller
 
     public function breedersProcessAdd(UploadRequest $request){
 
+      if(Auth::check()){
+            if(Auth::user()->accountActive != '1'){
+                  Session::flash('status', 'You must activate your account before you can create a listing.');
+                  return redirect()->route('checkout');
+            }else{
+
           do{
                 $token = random_str();
                 $code = 'EN'. $token . substr(strftime("%Y", time()),2);
@@ -133,6 +140,10 @@ class ListingCreator extends Controller
           $UpdateDetails->save();
           Session::flash('success', 'Listing Created.');
           return redirect()->route('view-breeder',['url' => $baseurl]);
+        }
+        }else{
+          return redirect()->route('member-only');
+        }
 
     }
 
@@ -144,7 +155,7 @@ class ListingCreator extends Controller
                   $listing = \App\Breeder::where('id', $request->lid)->first();
                 }else{
                   $userid = Auth::id();
-                  $listing = \App\Breeder::where('id', $request->lid)->where('userId','=','$userid')->first();
+                  $listing = \App\Breeder::where('id', $request->lid)->where('userId','=',$userid)->first();
                 }
                 if(!empty($listing)){
                     $baseurl = $listing->baseUrl;
@@ -187,6 +198,29 @@ class ListingCreator extends Controller
                         }
                         $listing->phone = $phone;
                       break;
+                      case "picture":
+                        //if we arent saving this picture, remove it completely
+                        if($request->savepicture != 'yes'){
+                          DB::table('breeder_pictures')->where('breeder_id',$request->lid)->where('isMain','1')->limit(1)->delete();
+                          //run scheduled clean ups to actually remove the files, just in case someone accidently deletes something
+                        }
+                        //check if setting to default
+                        if($request->setdefault == 'yes'){
+                            DB::table('breeder_pictures')->where('breeder_id',$request->lid)->update(['isMain' => '0']);
+                        }else{
+                          DB::table('breeder_pictures')->where('breeder_id',$request->lid)->update(['isMain' => '0']);
+                          //upload the new picture
+                          $this->validate($request, [
+                            'photos' => 'required|mimes:jpeg,bmp,png|max:8000',
+                          ]);
+                          $filename = $request->file('photos')->store('public/photos');
+                          \App\breederPictures::create([
+                            'breeder_id' => $request->lid,
+                            'filename' => str_replace('public/'.'',$filename),
+                            'isMain' => '1'
+                          ]);
+                        }
+                      break;
                       default:
                         return redirect()->route('view-breeder',['url' => $baseurl]);
                         break;
@@ -203,6 +237,54 @@ class ListingCreator extends Controller
        }else{
          return redirect()->route('member-only');
        }
+    }
+
+    public function breederEditListingAdd(UploadPicturesRequest $request){
+
+      if(Auth::check()){
+            if(is_numeric($request->lid)){
+              if(Auth::user()->hasRole(['superadministrator', 'administrator'])){
+                $listing = \App\Breeder::where('id', $request->lid)->first();
+              }else{
+                $userid = Auth::id();
+                $listing = \App\Breeder::where('id', $request->lid)->where('userId','=',$userid)->first();
+              }
+              if(!empty($listing)){
+                  $baseurl = $listing->baseUrl;
+                  if(count($request->pictures)){}
+                      foreach ($request->pictures as $picture) {
+                          $filename = $picture->store('public/photos');
+                          \App\breederPictures::create([
+                              'breeder_id' => $request->lid,
+                              'filename' => str_replace('public/','',$filename),
+                              'isMain' => '0'
+                          ]);
+                       }
+                    Session::flash('success', 'Listing updated.');
+                  }else{
+                    Session::flash('status', 'Please add a picture to add.');
+                  }
+                    return redirect()->route('view-breeder',['url' => $baseurl]);
+              }else{
+                return redirect()->route('listingremoved');
+              }
+            }else{
+              return redirect()->route('listingremoved');
+            }
+     }else{
+       return redirect()->route('member-only');
+     }
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
