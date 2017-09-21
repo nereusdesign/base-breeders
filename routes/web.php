@@ -65,6 +65,10 @@ Route::post('/edit-listing','ListingCreator@breederEditListing')->name('breeder-
 Route::post('/add-picture-to-listing','ListingCreator@breederEditListingAdd')->name('breeder-edit-listing-add');
 Route::get('/add-forSale/{url}', ['as' => 'add-available','uses' =>'ListingController@addForSale']);
 Route::post('/process-add-forSale',['as' =>'available.process.add','uses' => 'ListingController@processAddForSale']);
+Route::post('/message-breeder',['as' =>'message-breeder','uses' => 'MessageController@send']);
+
+
+
 
 Route::get('/account-settings', 'UserController@accountSettings')->name('settings');
 

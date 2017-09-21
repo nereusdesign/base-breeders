@@ -3,9 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Storage;
 use Auth;
 use DB;
 use Session;
+use App\Breeder;
+use App\breederPictures;
+use App\Listing;
+use App\listingPictures;
+use App\User;
+use App\Breed;
+use App\Account;
+use App\File;
 
 class ListingController extends Controller
 {
@@ -72,11 +81,6 @@ class ListingController extends Controller
 
         $userid = Auth::id();
 
-        if(checkdate($request->month,$request->day,$request->year)){
-          $dob = date('',strtotime($dirtydate));
-        }else{
-          $dob = "Unknown";
-        }
 
         $isMain = "1";
         $l = \App\Listing::create([
@@ -86,7 +90,7 @@ class ListingController extends Controller
           'zipcode' => $listing->zipcode,
           'about' => $request->about,
           'randomKey' => $code,
-          'DOB' => $dob,
+          'DOB' => $request->cleanDate,
           'numberAvailable' => $request->numAvailable
         ]);
 

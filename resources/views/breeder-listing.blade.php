@@ -206,7 +206,7 @@ blockquote em{
         <p class="modal-card-title">Send A Message To {{ $info->breederName }}</p>
         <button class="delete close-modal" aria-label="close"></button>
       </header>
-      <form action="" method="POST" role="form">
+      <form action="{{route('message-breeder')}}" method="POST" role="form">
       <section class="modal-card-body">
           {{csrf_field()}}
           <input type="hidden" name="lid" value="{{$info->randomKey}}">
