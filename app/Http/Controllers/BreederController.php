@@ -19,9 +19,11 @@ class BreederController extends Controller
 {
   public function view($url){
     $mainpic = null;
-    $info = \App\Breeder::where('breeders.baseurl',$url)->select('breeders.*','zip_code.*','breeds.id as bid','breeds.url as burl','breeds.breedName')->join('zip_code', 'breeders.zipcode', '=', 'zip_code.zip_code')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->first();
+    $info = \App\Breeder::where('breeders.baseUrl',$url)->select('breeders.*','zip_code.*','breeds.id as bid','breeds.url as burl','breeds.breedName')->join('zip_code', 'breeders.zipcode', '=', 'zip_code.zip_code')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->first();
 
-
+  if($info == null){
+    return redirect()->route('listingremoved');
+  }
 
       $pic = \App\breederPictures::where('breeder_id',$info->id)->get();
       if(!empty($pic)){

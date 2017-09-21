@@ -64,7 +64,7 @@ Route::post('/add-to-directory','ListingCreator@breedersProcessAdd')->name('dire
 Route::post('/edit-listing','ListingCreator@breederEditListing')->name('breeder-edit-listing');
 Route::post('/add-picture-to-listing','ListingCreator@breederEditListingAdd')->name('breeder-edit-listing-add');
 Route::get('/add-forSale/{url}', ['as' => 'add-available','uses' =>'ListingController@addForSale']);
-
+Route::post('/process-add-forSale',['as' =>'available.process.add','uses' => 'ListingController@processAddForSale']);
 
 Route::get('/account-settings', 'UserController@accountSettings')->name('settings');
 

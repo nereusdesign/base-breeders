@@ -39,4 +39,86 @@ class ListingController extends Controller
         return redirect()->route('member-only');
       }
     }
+
+    public function processAddForSale(ListingUploadRequest $request){
+
+
+      if(Auth::check()){
+            if(Auth::user()->accountActive != '1'){
+                  Session::flash('status', 'You must activate your account before you can create a listing.');
+                  return redirect()->route('checkout');
+            }else{
+
+              //validate the breeder key is legit and this user can access it
+              $randomKey = $request->listingK;
+              if(Auth::user()->hasRole(['superadministrator', 'administrator'])){
+                $listing = \App\Breeder::where('randomKey', $randomKey)->first();
+              }else{
+                $userid = Auth::id();
+                $listing = \App\Breeder::where('id', $randomKey)->where('userId','=',$userid)->first();
+              }
+
+              if(count($listing) != '1'){
+                return redirect()->route('listingremoved');
+              }
+
+          do{
+                $token = random_str();
+                $code = 'EN'. $token . substr(strftime("%Y", time()),2);
+                $user_code = \App\Listing::where('randomKey', $code)->first();
+            }
+            while(!empty($user_code));
+
+
+        $userid = Auth::id();
+
+        if(checkdate($request->month,$request->day,$request->year)){
+          $dob = date('',strtotime($dirtydate));
+        }else{
+          $dob = "Unknown";
+        }
+
+        $isMain = "1";
+        $l = \App\Listing::create([
+          'userId' => $userid,
+          'listingName' => $request->listingName,
+          'breedId' => $listing->breedId,
+          'zipcode' => $listing->zipcode,
+          'about' => $request->about,
+          'randomKey' => $code,
+          'DOB' => $dob,
+          'numberAvailable' => $request->numAvailable
+        ]);
+
+        if(!empty($request->photos)){
+            foreach ($request->photos as $photo) {
+                $filename = $photo->store('public/listings');
+                \App\listingPictures::create([
+                    'breeder_id' => $l->id,
+                    'filename' => str_replace('public/'.'',$filename),
+                    'isMain' => $isMain
+                ]);
+                if($isMain == '1'){
+                  $isMain = '0';
+                }
+            }
+        }
+        //generate the url, then redirect either to the admin panel or the actually profile page itself
+          $baseurl = make_base_url($request->listingName." ".$l->id);
+          $l->baseurl = $baseurl;
+          $l->save();
+          Session::flash('success', 'Listing Created.');
+          return redirect()->route('view-breeder',['url' => $listing->baseUrl]);
+        }
+        }else{
+          return redirect()->route('member-only');
+        }
+
+
+
+
+
+
+    }
+
 }

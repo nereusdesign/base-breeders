@@ -21,15 +21,15 @@
             @endif
             <form action="{{route('available.process.add')}}" method="POST" role="form" enctype="multipart/form-data">
               {{csrf_field()}}
-
+                <input type="hidden" name="listingK" value="{{$rk}}">
 
               <div class="field">
                 <label for="breeder" class="label">Listing Name</label>
                 <p class="control">
-                  <input class="input {{$errors->has('breeder') ? 'is-danger' : ''}}" type="text" name="breeder" id="breeder" value="{{old('breeder')}}" required>
+                  <input class="input {{$errors->has('listingName') ? 'is-danger' : ''}}" type="text" name="listingName" id="listingName" value="{{old('listingName')}}" required>
                 </p>
-                @if ($errors->has('breeder'))
-                  <p class="help is-danger">{{$errors->first('breeder')}}</p>
+                @if ($errors->has('listingName'))
+                  <p class="help is-danger">{{$errors->first('listingName')}}</p>
                 @endif
               </div>
 
@@ -37,7 +37,7 @@
                 <label for="breeder" class="label">Date of Birth/Due Date</label>
                 <div class="control">
                   <div class="is-pulled-left m-r-5">
-                    <select name="month" id="month" class="select">
+                    <select name="month" id="month" class="select {{$errors->has('date') ? 'is-danger' : ''}}" required>
                       <option>- Month -</option>
                       <option value="01">Jan</option>
                       <option value="02">Feb</option>
@@ -54,7 +54,7 @@
                     </select>
                   </div>
                   <div class="is-pulled-left m-r-5">
-                    <select name="day" id="day" class="select">
+                    <select name="day" id="day" class="select {{$errors->has('date') ? 'is-danger' : ''}}" required>
                       <option>- Day -</option>
                       @for ($i=1; $i < 32; $i++)
                         <option value="{{$i}}">{{$i}}</option>
@@ -62,7 +62,7 @@
                     </select>
                   </div>
                   <div class="is-pulled-left m-r-5">
-                    <select name="year" id="year" class="select">
+                    <select name="year" id="year" class="select {{$errors->has('date') ? 'is-danger' : ''}}" required>
                       <option>- Year -</option>
                       @foreach ($years as $value)
                         <option value="{{$value}}" {{ if($value == $thisyear){ echo "selected"; } }}>{{$value}}</option>
@@ -70,8 +70,8 @@
                     </select>
                   </div>
                 </div>
-                @if ($errors->has('breeder'))
-                  <p class="help is-danger">{{$errors->first('breeder')}}</p>
+                @if ($errors->has('date'))
+                  <p class="help is-danger">Invalid date</p>
                 @endif
               </div>
 
@@ -103,8 +103,8 @@
                     <option value="20">20</option>
                   </select>
                 </p>
-                @if ($errors->has('email'))
-                  <p class="help is-danger">{{$errors->first('email')}}</p>
+                @if ($errors->has('numAvailable'))
+                  <p class="help is-danger">{{$errors->first('numAvailable')}}</p>
                 @endif
               </div>
 
@@ -123,16 +123,16 @@
                 <label for="photos" class="label">Picture(s) </label>
                 <div class="input_fields_wrap">
                 <div class="control">
-                    <input class="file-input" type="file" name="pictures[]" />
+                    <input class="file-input" type="file" name="photos[]" />
                 </div>
                 <button class="add_field_button button is-info is-small">Add Another Picture</button>
               </div>
-                @if ($errors->has('pictures'))
-                  <p class="help is-danger">{{$errors->first('pictures')}}</p>
+                @if ($errors->has('photos'))
+                  <p class="help is-danger">{{$errors->first('photos')}}</p>
                 @endif
               </div>
 
-              <button class="button is-success is-outlined is-fullwidth m-t-30">Create Breeder Listing</button>
+              <button class="button is-success is-outlined is-fullwidth m-t-30">Create Listing</button>
             </form>
           </div> <!-- end of .card-content -->
         </div> <!-- end of .card -->
@@ -155,7 +155,7 @@
       if(x >= max_fields){
         $('.add_field_button').hide();
       }
-      $('.input_fields_wrap').append('<div class="control"><input class="file-input" type="file" name="pictures[]" /><a href="#" class="remove_field">Remove</a></div>')
+      $('.input_fields_wrap').append('<div class="control"><input class="file-input" type="file" name="photos[]" /><a href="#" class="remove_field">Remove</a></div>')
     }
   });
   $('.input_fields_wrap').on("click",".remove_field",function(e){

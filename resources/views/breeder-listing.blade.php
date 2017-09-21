@@ -116,10 +116,10 @@ blockquote em{
                   <div class="tabs is-fullwidth">
                           <ul>
                                 @if (!empty($info->url) || $canEdit)
-                                  <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true" id="editWeb"></i><a href="{{ $info->url }}" target="_blank" class="font-color-black"><span class="icon"><i class="fa fa-globe"></i></span> <span>Visit Website</span></a>
+                                  <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true" id="editWeb"></i><a href="{{ $info->url }}" target="_blank" class="font-color-black"><span class="icon"><i class="fa fa-globe"></i></span> <span class='is-hidden-mobile'>Visit Website</span></a>
                                   </li>
                                 @endif
-                                  <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a class="font-color-black"><span class="icon"><i class="fa fa-envelope" id="editEmail"></i></span> <span>Send Email</span></a>
+                                  <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a class="font-color-black" id="messageToBreeder"><span class="icon"><i class="fa fa-envelope" id="editEmail"></i></span> <span class='is-hidden-mobile'>Send Email</span></a>
                                   </li>
                                   @if (!empty($info->phone) || $canEdit)
                                     <li class="link main-border-bottom-color"><i class="fa fa-pencil-square-o is-hover editIcon" aria-hidden="true"></i><a><span class="icon"><i class="fa fa-phone" id="editPhone"></i></span> <span>{{ $info->phone }}</span></a>
@@ -133,31 +133,62 @@ blockquote em{
 
           <div class="spacer"></div>
 
-
-          <div class="columns">
-                  <div class="column is-3">
-                      Availble/ Pictures
-
-                  </div>
-
-          </div>
   </div>
 
 
-  <section class="m-t-75 m-l-100 m-r-100">
+  <section class="m-t-75 is-three-quarters">
       <b-tabs type="is-boxed is-centered" v-model="activeTab">
           <b-tab-item label="Available {{ $info->breedName }}">
             @if ($canEdit)
               <a href="{{route('add-available',['url' => $thisurl])}}" class="button is-primary">Add For Sale</a>
 
             @endif
-            <h1>Available {{ $info->breedName }}</h1>
+
+            <h1 class="title m-l-10 m-t-20">Available {{ $info->breedName }}</h1>
+
+
+            <div class="columns is-multiline is-centered m-t-20">
+              @for ($i=0; $i < rand(15,30); $i++)
+
+                <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd m-l-10 m-r-10 m-t-10 m-b-10" style="background-color:red">
+                  <div class="card-image">
+                   <figure class="image is-4by3">
+                     <img src="https://placehold.it/1280x960" alt="Image">
+                   </figure>
+                 </div>
+                </div>
+              @endfor
+
+            </div>
+
+
           </b-tab-item>
           <b-tab-item label="{{ $info->breedName }} Pictures">
             @if ($canEdit)
               <button id="addPicture" class="button is-primary">Add Pictures</button>
             @endif
-              <h1>{{ $info->breedName }} Pictures</h1>
+              <h1 class="title m-l-10 m-t-20">{{ $info->breedName }} Pictures</h1>
+
+
+              <div class="columns is-multiline is-centered m-t-20">
+                @for ($i=0; $i < rand(15,30); $i++)
+
+                  <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd m-l-10 m-r-10 m-t-10 m-b-10" style="background-color:red">
+                    <div class="card-image">
+                     <figure class="image is-4by3">
+                       <img src="https://placehold.it/1280x960" alt="Image">
+                     </figure>
+                   </div>
+                  </div>
+                @endfor
+
+              </div>
+
+
+
+
+
+
           </b-tab-item>
 
       </b-tabs>
@@ -165,6 +196,59 @@ blockquote em{
   @if ($canEdit)
     @include('listings.edits')
   @endif
+
+
+
+  <div class="modal" id='sendMsg'>
+    <div class="modal-background"></div>
+    <div class="modal-card m-t-20">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Send A Message To {{ $info->breederName }}</p>
+        <button class="delete close-modal" aria-label="close"></button>
+      </header>
+      <form action="" method="POST" role="form">
+      <section class="modal-card-body">
+          {{csrf_field()}}
+          <input type="hidden" name="lid" value="{{$info->randomKey}}">
+
+
+          <div class="field">
+            <label for="personname" class="label">Your Name</label>
+            <p class="control">
+              <input class="input {{$errors->has('personname') ? 'is-danger' : ''}}" type="text" name="personname" id="personname" required>
+            </p>
+            @if ($errors->has('personname'))
+              <p class="help is-danger">{{$errors->first('personname')}}</p>
+            @endif
+          </div>
+
+          <div class="field">
+            <label for="your_email" class="label">Your Email</label>
+            <p class="control">
+              <input class="input {{$errors->has('your_email') ? 'is-danger' : ''}}" type="your_email" name="your_email" id="your_email" required>
+            </p>
+            @if ($errors->has('your_email'))
+              <p class="help is-danger">{{$errors->first('your_email')}}</p>
+            @endif
+          </div>
+
+        <div class="field">
+          <label for="message" class="label">Message</label>
+          <p class="control">
+            <textarea class="input {{$errors->has('message') ? 'is-danger' : ''}}" type="text" name="message" id="about">{{old('message')}}</textarea>
+          </p>
+          @if ($errors->has('message'))
+            <p class="help is-danger">{{$errors->first('message')}}</p>
+          @endif
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <input type="submit" value="Send Message" class="button is-primary">
+        <button class="button close-modal">Cancel</button>
+      </footer>
+      </form>
+    </div>
+  </div>
 
 @endsection
 @section('scripts')
@@ -182,6 +266,14 @@ blockquote em{
                 e.preventDefault();
                 $( ".modal" ).hide();
             });
+
+            $('#messageToBreeder').click(function(){
+                $( "#sendMsg" ).toggle();
+            });
+            @if ($errors->has('personname') || $errors->has('your_email') || $errors->has('message'))
+              $( "#sendMsg" ).show();
+            @endif
+
 
             $('#editListingname').click(function(){
                 $( "#listingnameEdit" ).toggle();
