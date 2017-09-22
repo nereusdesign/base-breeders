@@ -56,7 +56,7 @@ class SearchController extends Controller
           $urlclean = str_replace('-breeders','',$url);
           $breeddetails = \App\Breed::where('url', $urlclean)->first();
           if($breeddetails){
-            $breeders = \App\Breeder::where('breedId',$breeddetails->id)->get();
+            $breeders = \App\Breeder::where('breedId',$breeddetails->id)->select('breeders.*','zip_code.*','breeds.id as bid','breeds.url as burl','breeds.breedName')->join('zip_code', 'breeders.zipcode', '=', 'zip_code.zip_code')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->get();
               $picture = null;
               foreach($breeders as $b){
                 $getpic = null;
@@ -98,7 +98,7 @@ class SearchController extends Controller
               $lon = $loc->lon;
               $breeders = DB::select("SELECT breeders.*,zip_code.lat,zip_code.lon,zip_code.zip_code,zip_code.city,zip_code.state_prefix,zip_code.country,2 * ASIN(SQRT(POWER(SIN(RADIANS(zip_code.lat) - RADIANS($lat)) / 2, 2) + (COS(RADIANS(zip_code.lat)) * COS(RADIANS($lat)) * POWER(SIN((RADIANS(zip_code.lon) - RADIANS($lon)) / 2), 2)))) AS distance FROM `breeders` INNER JOIN `zip_code` ON breeders.zipcode = zip_code.zip_code WHERE breeders.breedId = '".$request->breed."' ORDER BY distance LIMIT 30");
             }else{
-              $breeders = \App\Breeder::where('breedId',$breeddetails->id)->get();
+              $breeders = \App\Breeder::where('breedId',$breeddetails->id)->select('breeders.*','zip_code.*','breeds.id as bid','breeds.url as burl','breeds.breedName')->join('zip_code', 'breeders.zipcode', '=', 'zip_code.zip_code')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->inRandomOrder()->get();
             }
 
 

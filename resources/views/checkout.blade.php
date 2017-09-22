@@ -15,116 +15,61 @@
         @if(Session::has('status'))
               <p class="help is-danger is-font-16">{{ Session::get('status') }}</p>
         @endif
-          <h1 class="title is-spaced">Activate your account</h1>
-              <h2 class="subtitle m-t-20">Billing Address</h2>
-          <form action="{{route('checkout-post')}}" method="POST" role="form">
-            {{csrf_field()}}
-            <div class="field">
-              <label for="address" class="label">Street Address</label>
-              <p class="control">
-                <div><input class="input {{$errors->has('address') ? 'is-danger' : ''}}" type="text" name="address" id="address" placeholder="123 Your Street" value="{{old('address')}}"></div>
-                <div class="m-t-5 m-b-5"><input class="input {{$errors->has('address2') ? 'is-danger' : ''}}" type="text" name="address2" id="address2" placeholder="Apt #2" value="{{old('address2')}}"></div>
-              </p>
-              <div class="columns">
-                <div class="column"><input class="input {{$errors->has('city') ? 'is-danger' : ''}}" type="text" name="city" id="city" placeholder="City" value="{{old('address')}}"></div>
-                <div class="column"><input class="input {{$errors->has('state') ? 'is-danger' : ''}}" type="text" name="state" id="state" placeholder="State" value="{{old('state')}}"></div>
-              </div>
-              @if ($errors->has('city'))
-                <p class="help is-danger">{{$errors->first('city')}}</p>
-              @endif
-              @if ($errors->has('state'))
-                <p class="help is-danger">{{$errors->first('state')}}</p>
-              @endif
-              <div class="columns">
-                <div class="column">
-                  <p class="control">
-                    <select class="select is-fullwidth {{$errors->has('accountType') ? 'is-danger' : ''}}" name="country" id="country" required>
-                      <option>-- Select Your Country --</option>
-                      <option value="US">United States</option>
-                      <option value="CA">Canada</option>
-                    </select>
-                  </p>
+        @if(Session::has('success'))
+              <p class="help is-success is-font-16">{{ Session::get('success') }}</p>
+        @endif
+          <noscript>
+          <div class="help is-danger">
+            <h4>JavaScript is not enabled!</h4>
+            <p>This payment form requires your browser to have JavaScript enabled. Please activate JavaScript and reload this page. Check <a href="http://enable-javascript.com" target="_blank">enable-javascript.com</a> for more informations.</p>
+          </div>
+          </noscript>
+                <div id="currentPayment">
+                  <div class="subtitle is-muted">Pay now to activate the following breeder plan</div>
+                  <div>
+                      <strong>{{$accountName}}</strong>
+                      <div class="is-pulled-right is-muted subtitle">{{$amount}}</div>
+                  </div>
+                  <div>
+                    <a href="#" id="offerchange" class="is-size-6 is-primary">Change Plan</a>
+                  </div>
                 </div>
-              </div>
-
-<hr class="navbar-divider">
-
-          <h2 class="subtitle">Payment Information</h2>
-            <div class="field">
-              <label for="password" class="label">Card Holder's Name</label>
-              <p class="control">
-                <input class="input {{$errors->has('cardholdername') ? 'is-danger' : ''}}" type="text" name="cardholdername" id="cardholdername" required>
-              </p>
-              @if ($errors->has('cardholdername'))
-                <p class="help is-danger">{{$errors->first('cardholdername')}}</p>
-              @endif
-
-            </div>
-
-            <div class="field">
-              <label for="cardnumber" class="label">Card Number</label>
-              <p class="control">
-                <input class="input {{$errors->has('cardnumber') ? 'is-danger' : ''}}" type="text" name="cardnumber" id="cardnumber">
-              </p>
-              @if ($errors->has('cardnumber'))
-                <p class="help is-danger">{{$errors->first('cardnumber')}}</p>
-              @endif
-
-            </div>
-
-            <div class="field">
-              <label for="card-cvc" class="label">CVV/CVV2</label>
-              <p class="control">
-                <input class="input {{$errors->has('card-cvc') ? 'is-danger' : ''}}" type="text" name="card-cvc" id="card-cvc">
-              </p>
-              @if ($errors->has('card-cvc'))
-                <p class="help is-danger">{{$errors->first('card-cvc')}}</p>
-              @endif
-
-            </div>
-
-            <div class="field">
-              <label for="exp-month" class="label">Card Expiry Date</label>
-              <div class="columns">
-                <div class="column">
-                  <select class="select {{$errors->has('exp-month') ? 'is-danger' : ''}}" name="exp-month" id="exp-month" required>
-                    <option value="01" selected="selected">01</option>
-                     <option value="02">02</option>
-                     <option value="03">03</option>
-                     <option value="04">04</option>
-                     <option value="05">05</option>
-                     <option value="06">06</option>
-                     <option value="07">07</option>
-                     <option value="08">08</option>
-                     <option value="09">09</option>
-                     <option value="10">10</option>
-                     <option value="11">11</option>
-                     <option value="12">12</option>
-
-                  </select>
-                  <span> / </span>
-                  <select name="exp-year" class="select">
-                    @foreach ($years as $year)
-                      <option value="{{ $year }}">{{ $year }}</option>
-                    @endforeach
-                  </select>
+                <div id="changePlan" style="display:none">
+                          <form method="POST" action="{{route('changePlan')}}">
+                          <div class="field">
+                            <label for="accountType" class="label">Change Your Breeder Plan</label>
+                            @if ($payerror)
+                              <p class="help is-danger">The account option you chose is no longer available. Please choose from one of our available plans</p>
+                            @endif
+                            <p class="control">
+                              <select class="select is-fullwidth {{$errors->has('accountType') ? 'is-danger' : ''}}" name="accountType" id="accountType" required>
+                                <option>-- Select Your Account Length --</option>
+                                @foreach ($accounts as $key => $value)
+                                  <option value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+                              </select>
+                            </p>
+                            @if ($errors->has('accountType'))
+                              <p class="help is-danger">{{$errors->first('accountType')}}</p>
+                            @endif
+                          </div>
+                          <button class="button is-success is-outlined  m-t-10 is-small">Update Your Account</button>
+                        </form>
                 </div>
-              </div>
-
-
-
-              @if ($errors->has('exp-month'))
-                <p class="help is-danger">{{$errors->first('exp-month')}}</p>
-              @endif
-              @if ($errors->has('exp-year'))
-                <p class="help is-danger">{{$errors->first('exp-year')}}</p>
-              @endif
-
-            </div>
-
-
-            <button class="button is-success is-outlined is-fullwidth m-t-30">Submit Your Payment</button>
-          </form>
+                <hr class="m-b-20">
+                <div id="payspace">
+                      <h1 class="title is-spaced">Activate your account</h1>
+                      <form action="" method="POST">
+                          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="{{$publishable}}"
+                            data-description="findyourbreeder.com: {{$accountName}}"
+                            data-amount="{{$stripePayAmount}}"
+                            data-image="https://www.findyourbreeder.com/images/static/large_logo_name.png"
+                            data-name="www.findyourbreeder.com"
+                            data-label="Activate Your Account"
+                            data-locale="auto"></script>
+                      </form>
+                </div>
           </div>
         </div> <!-- end of .card-content -->
       </div> <!-- end of .card -->
@@ -133,10 +78,24 @@
   </div>
 
 
-
 @endsection
 @section('scripts')
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
         <script>
+
+        $(document).ready(function(){
+          @if ($payerror)
+            $('#payspace').hide();
+            $('#currentPayment').hide();
+            $('#changePlan').show();
+          @endif
+           $('#offerchange').click(function (){
+           $('#changePlan').toggle();
+           });
+        });
+
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)

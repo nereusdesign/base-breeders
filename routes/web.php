@@ -66,7 +66,7 @@ Route::post('/add-picture-to-listing','ListingCreator@breederEditListingAdd')->n
 Route::get('/add-forSale/{url}', ['as' => 'add-available','uses' =>'ListingController@addForSale']);
 Route::post('/process-add-forSale',['as' =>'available.process.add','uses' => 'ListingController@processAddForSale']);
 Route::post('/message-breeder',['as' =>'message-breeder','uses' => 'MessageController@send']);
-
+Route::post('/update-plan',['as' => 'changePlan','uses' => 'UserController@changePlan']);
 
 
 

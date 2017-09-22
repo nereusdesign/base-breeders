@@ -18,7 +18,7 @@
                   Search Our Free Breeder Directory To Find Dog &amp; Cat Breeders
                 </h2>
                 <br>
-
+                <form>
                 <div class="field">
                   <p class="control">
                     <div class="select">
@@ -44,14 +44,72 @@
 
 
                 <p class="has-text-centered">
-                  <a class="button is-large">
+                  <button class="button is-large">
                     <i class="fa fa-search m-r-10" aria-hidden="true"></i>Search
-                  </a>
+                  </button></form>
                 </p>
               </div>
             </div>
           </div>
         </div>
+  </section>
+
+  <section>
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">Featured Breeders</h1>
+        <h2 class="subtitle">Browse some of our featured dog and cat breeders</h2>
+        <div class="columns is-multiline is-centered m-t-10">
+          @foreach ($featured as $breeder)
+            <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd m-l-10 m-r-10 m-t-10 m-b-10" style="background-color: #efefef">
+              <div class="card">
+                        <div class="card-image">
+                          <figure class="image is-4by3">
+                            <img src="{{asset($pix[$breeder->id])}}" alt="{{ addslashes($breeder->breederName) }}" style="width: auto;margin-right: auto;margin-left: auto;">
+                          </figure>
+                        </div>
+                        <div class="card-content">
+                          <div class="content">
+                            <div>{{$breeder->breederName}}</div>
+                            <div>{{$breeder->city.' '.$breeder->state_prefix.' '.strtoupper($breeder->country)}}</div>
+                            <strong class="tag">{{$breeder->breedName}}</strong>
+                            @if (array_key_exists($breeder->id,$haslistings))
+                              <div class="tag is-primary is-pulled-right timestamp">{{$haslistings[$breeder->id]}}</div>
+                            @endif
+                          </div>
+                        </div>
+                        <footer class="card-footer">
+                          <a href="{{url('/view-breeder/'.$breeder->baseUrl)}}" class="card-footer-item">View Profile</a>
+                        </footer>
+                      </div>
+            </div>
+
+
+          @endforeach
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="subtitle">Newest Dog &amp; Cat Pictures</h2>
+        <div class="columns is-multiline is-centered m-t-10">
+          @foreach ($pictures as $picture)
+
+            <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd m-l-10 m-r-10 m-t-10 m-b-10" style="background-color: #efefef;"><div class="card-image"><figure class="image is-4by3"><img src="{{asset('storage/'.$picture->filename)}}" alt="Dog and Cat Pictures" style="width: auto;margin-right: auto;margin-left: auto;"></figure></div></div>
+
+
+          @endforeach
+
+
+        </div>
+      </div>
+    </div>
   </section>
 @endsection
 

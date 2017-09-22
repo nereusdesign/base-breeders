@@ -198,5 +198,23 @@ class UserController extends Controller
         }
     }
 
+    public function changePlan(Request $request){
+      if(Auth::check()){
+            $this->validate($request, [
+              'accountType' => 'required|exists:accounts,accountKey'
+            ]);
+            $user = User::find(Auth::id());
+            $user->payKey = $request->accountType;
+            if($user->save()){
+              Session::flash('success', 'Your account has been updated.');
+            }else{
+              Session::flash('status', 'We were unable to change your account type at this time. Please try again.');
+            }
+            return redirect()->route('checkout');
+      }else{
+        return redirect()->route('member-only');
+      }
+    }
+
 
 }

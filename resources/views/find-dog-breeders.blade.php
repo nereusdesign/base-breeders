@@ -15,7 +15,7 @@
           <h1 class="title">Find Dog and Puppy Breeders</h1>
           <p class="is-size-6 m-b-30">Find dog breeders near you using our free dog breeder search. Locate dog and puppy breeders from around the United States and Canada</p>
 
-          <form action="{{route('cat-search')}}" method="POST" role="form">
+          <form action="{{route('dog-search')}}" method="POST" role="form">
             {{csrf_field()}}
             <div class="field">
               <label for="email" class="label">Select A Dog Breed</label>
