@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title','Information on Dog and Cat Breeds')
+@section('desc','Learn about popular dog and cat breeds. View pictures of popular and rare dog and cat breeds.')
+
 @section('content')
   <div class="m-t-50 m-l-35 m-r-35">
               @if(isset($dogs))

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title',$info->breedName.' Breeder In '.$info->city.' '.$info->state_prefix.' | '.$info->breederName)
+@section('desc','Local '.addslashes($info->breedName).' breeder near you in '.addslashes($info->city).' '.addslashes($info->state_prefix).'. Use Find your breeder (findyourbreeder.com) to find top quality '.addslashes($info->breedName).' breeders near you.')
 
 @section('styles')
 <style>

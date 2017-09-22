@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+
+
+@section('title','Find '.$info->breedName.' Breeders Near You | Find Your '.$info->breedType.' Breeder')
+@section('desc','Find local '.addslashes($info->breedName).' breeder near you. Use our free '.addslashes($info->breedName).' search and '.addslashes($info->breedName).' breeder directory to find '.addslashes($info->breedName).' breeders near you.')
+
 @section('content')
 
 <div class="columns">
@@ -15,8 +20,10 @@
                             </div>
                     </div>
                     <div class="column">
-                            <div class="title is-2">{{ $info->breedName }} Breeders</div>
-                            <p class="subtitle is-6 has-text-muted">{{ $info->otherNames }}</p>
+                            <h1 class="title is-2">{{ $info->breedName }} Breeders</h1>
+                            @if ($info->otherNames != 'None')
+                              <p class="subtitle is-6 has-text-muted">{{ $info->otherNames }}</p>
+                            @endif  
                             <a href="{{ route('breed-info',['url' => $info->url]) }}" class="button is-info is-pulled-right m-r-10">Find {{ $info->breedName }} Info</a>
                             <div class="is-clearfix"></div>
                     </div>

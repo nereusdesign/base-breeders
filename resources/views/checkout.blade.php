@@ -64,7 +64,7 @@
                             data-key="{{$publishable}}"
                             data-description="findyourbreeder.com: {{$accountName}}"
                             data-amount="{{$stripePayAmount}}"
-                            data-image="https://www.findyourbreeder.com/images/static/large_logo_name.png"
+                            data-image="https://www.findyourbreeder.com/images/large_logo_name.png"
                             data-name="www.findyourbreeder.com"
                             data-label="Activate Your Account"
                             data-locale="auto"></script>
