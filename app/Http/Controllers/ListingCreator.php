@@ -7,6 +7,7 @@ use App\Http\Requests\UploadRequest;
 use App\Http\Requests\UploadPicturesRequest;
 use Auth;
 use Session;
+use DB;
 use App\User;
 use App\Breed;
 use App\Breeder;
@@ -125,7 +126,7 @@ class ListingCreator extends Controller
                 $filename = $photo->store('public/photos');
                 \App\breederPictures::create([
                     'breeder_id' => $breeder->id,
-                    'filename' => str_replace('public/'.'',$filename),
+                    'filename' => str_replace('public/','',$filename),
                     'isMain' => $isMain
                 ]);
                 if($isMain == '1'){
@@ -216,7 +217,7 @@ class ListingCreator extends Controller
                           $filename = $request->file('photos')->store('public/photos');
                           \App\breederPictures::create([
                             'breeder_id' => $request->lid,
-                            'filename' => str_replace('public/'.'',$filename),
+                            'filename' => str_replace('public/','',$filename),
                             'isMain' => '1'
                           ]);
                         }
@@ -251,7 +252,7 @@ class ListingCreator extends Controller
               }
               if(!empty($listing)){
                   $baseurl = $listing->baseUrl;
-                  if(count($request->pictures)){}
+                  if(count($request->pictures)){
                       foreach ($request->pictures as $picture) {
                           $filename = $picture->store('public/photos');
                           \App\breederPictures::create([
@@ -262,7 +263,7 @@ class ListingCreator extends Controller
                        }
                     Session::flash('success', 'Listing updated.');
                   }else{
-                    Session::flash('status', 'Please add a picture to add.');
+                    Session::flash('status', 'Please select a picture to add.');
                   }
                     return redirect()->route('view-breeder',['url' => $baseurl]);
               }else{

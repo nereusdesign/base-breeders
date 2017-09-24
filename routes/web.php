@@ -53,6 +53,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/checkout', 'HomeController@checkout')->name('checkout');
 Route::post('/checkout', ['as' => 'checkout-post', 'uses' => 'HomeController@postOrder']);
+Route::any('/find-breeders', ['as' => 'search-for-breeders', 'uses' => 'SearchController@indexSearch']);
 
 
 //Base user account routes

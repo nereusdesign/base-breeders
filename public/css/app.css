@@ -13673,6 +13673,10 @@ nav.navbar {
   background-color: #efefef !important;
 }
 
+textarea {
+  height: 165px !important;
+}
+
 .m-t-5 {
   margin-top: 5px;
 }

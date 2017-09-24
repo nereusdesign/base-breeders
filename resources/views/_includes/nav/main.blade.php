@@ -1,7 +1,7 @@
 <nav class="navbar has-shadow">
   <div class="navbar-brand">
-      <a href="{{route('index')}}" class="nav-item"><img src="{{asset('images/findyourbreederlogo.png')}}" alt="Find Your Breeder Logo">
-          Find Breeder
+      <a href="{{route('index')}}" class="nav-item" style="font-size: 20px;font-weight: bold;color: #3f69b3;font-family: 'Nunito', sans-serf;"><img src="{{asset('images/findyourbreederlogo.png')}}" alt="Find Your Breeder Logo">
+          Find Your Breeder
       </a>
     <div class="navbar-burger burger" data-target="navMenubd-example">
       <span></span>

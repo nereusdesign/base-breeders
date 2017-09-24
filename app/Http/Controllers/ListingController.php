@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ListingUploadRequest;
 use Storage;
 use Auth;
 use DB;
@@ -64,7 +65,7 @@ class ListingController extends Controller
                 $listing = \App\Breeder::where('randomKey', $randomKey)->first();
               }else{
                 $userid = Auth::id();
-                $listing = \App\Breeder::where('id', $randomKey)->where('userId','=',$userid)->first();
+                $listing = \App\Breeder::where('randomKey', $randomKey)->where('userId','=',$userid)->first();
               }
 
               if(count($listing) != '1'){

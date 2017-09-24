@@ -23,7 +23,7 @@
                             <h1 class="title is-2">{{ $info->breedName }} Breeders</h1>
                             @if ($info->otherNames != 'None')
                               <p class="subtitle is-6 has-text-muted">{{ $info->otherNames }}</p>
-                            @endif  
+                            @endif
                             <a href="{{ route('breed-info',['url' => $info->url]) }}" class="button is-info is-pulled-right m-r-10">Find {{ $info->breedName }} Info</a>
                             <div class="is-clearfix"></div>
                     </div>
@@ -38,15 +38,15 @@
                         <div class="column is-4">
                                 <div class="image">
                                         <img src="{{asset($pictures[$value->id])}}" alt="{{ addslashes($value->breederName) }}" class="breeder-result-img">
-                                        <a href="{{url('/view-breeder/'.$value->baseUrl)}}" class="button is-success is-outlined is-fullwidth m-t-10 m-b-10" target="_blank">View {{ $value->breederName }} Profile</a>
-                                        <a href="#" class="button is-success is-outlined is-fullwidth">Contact {{ $value->breederName }}</a>
+                                        <a href="{{url('/view-breeder/'.$value->baseUrl)}}" class="button is-success is-outlined is-fullwidth m-t-10" target="_blank">View {{ $value->breederName }} Profile</a>
+                                      
                                 </div>
                         </div>
                         <div class="column">
                                 <h2 class="title is-4">{{ $value->breederName }}</h2>
-                                <p class="subtitle is-5 has-text-muted"> <i class="fa fa-map-marker-m-r-5"></i> {{ $value->zipcode }}</p>
+                                <p class="subtitle is-5 has-text-muted"> <i class="fa fa-map-marker-m-r-5"></i> {{ $value->city.' '.$value->state_prefix.' '.$value->country }}</p>
                                 <strong class="is-5">About {{ $value->breederName }}</strong>
-                                <p class="p-l-5">{{ $value->about }}</p>
+                                <p class="p-l-5">{!! $value->about !!}</p>
                         </div>
 
                 </div>

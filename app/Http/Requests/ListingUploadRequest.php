@@ -24,8 +24,8 @@ class ListingUploadRequest extends FormRequest
 
 
     protected function prepareForValidation() {
-        $this['date'] = strtotime($this->year." ".$this->month."-".$this->day);
-        $this['cleanDate'] = date('M d Y',$this['date']);
+        $this['date'] = $this->year."-".$this->month."-".$this->day;
+        $this['cleanDate'] = date('M d Y',strtotime($this['date']));
     }
 
 

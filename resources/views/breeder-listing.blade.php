@@ -150,7 +150,9 @@ blockquote em{
 
 
             <div class="columns is-multiline is-centered m-t-20">
-              @for ($i=0; $i < rand(15,30); $i++)
+              @foreach ($listings as $listing)
+
+
 
                 <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd m-l-10 m-r-10 m-t-10 m-b-10" style="background-color:red">
                   <div class="card-image">
@@ -159,7 +161,7 @@ blockquote em{
                    </figure>
                  </div>
                 </div>
-              @endfor
+              @endforeach
 
             </div>
 
@@ -173,16 +175,25 @@ blockquote em{
 
 
               <div class="columns is-multiline is-centered m-t-20">
-                @for ($i=0; $i < rand(15,30); $i++)
+                @foreach ($pic as $key => $picture)
 
-                  <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd m-l-10 m-r-10 m-t-10 m-b-10" style="background-color:red">
+                  <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd m-l-10 m-r-10 m-t-10 m-b-10" style="background-color:#efefef">
                     <div class="card-image">
                      <figure class="image is-4by3">
-                       <img src="https://placehold.it/1280x960" alt="Image">
+                       <img src="{{asset($picture)}}" alt="Image" style="height:100%;width:auto;margin-left:auto;margin-right:auto">
                      </figure>
                    </div>
+                   <footer class="card-footer">
+                     @if ($canEdit)
+                       <form method="POST" action="" onsubmit="return confirm('Do you really want to delete this picture?');">
+                         {{csrf_field()}}
+                         <input type="hidden" name="img" value="{{$key}}">
+                        <input type="submit" class="button is-fullwidth is-outline is-danger m-t-10" value="Remove">
+                       </form>
+                    @endif
+                   </footer>
                   </div>
-                @endfor
+                @endforeach
 
               </div>
 

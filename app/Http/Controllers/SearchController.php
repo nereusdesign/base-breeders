@@ -123,4 +123,14 @@ class SearchController extends Controller
           }
     }
 
+    public function indexSearch(Request $request){
+      $breed = DB::table('breeds')->where('id','=',$request->breed)->first();
+      if($breed == null){
+        return redirect()->route('find-breeders');
+      }else{
+        $url = $breed->url.'-breeders';
+        return redirect('/'.$url);
+      }
+    }
+
 }

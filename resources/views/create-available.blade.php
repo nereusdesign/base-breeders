@@ -65,10 +65,11 @@
                     <select name="year" id="year" class="select {{$errors->has('date') ? 'is-danger' : ''}}" required>
                       <option>- Year -</option>
                       @foreach ($years as $value)
-                        <option value="{{$value}}" {{ if($value == $thisyear){ echo "selected"; } }}>{{$value}}</option>
+                        <option value="{{$value}}"  @if($value == $thisyear){ selected } @endif>{{$value}}</option>
                       @endforeach
                     </select>
                   </div>
+                  <div class="is-clearfix"></div>
                 </div>
                 @if ($errors->has('date'))
                   <p class="help is-danger">Invalid date</p>
@@ -132,7 +133,7 @@
                 @endif
               </div>
 
-              <button class="button is-success is-outlined is-fullwidth m-t-30">Create Listing</button>
+              <button class="button is-success is-outlined is-fullwidth m-t-30 m-b-20">Create Listing</button>
             </form>
           </div> <!-- end of .card-content -->
         </div> <!-- end of .card -->
@@ -145,7 +146,7 @@
 @section('scripts')
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script>
-
+$(document).ready(function() {
   var max_fields = 10;
   var x = 1;
   $('.add_field_button').click(function(e) {
@@ -158,6 +159,7 @@
       $('.input_fields_wrap').append('<div class="control"><input class="file-input" type="file" name="photos[]" /><a href="#" class="remove_field">Remove</a></div>')
     }
   });
+
   $('.input_fields_wrap').on("click",".remove_field",function(e){
     e.preventDefault();
     $(this).parent('div').remove();

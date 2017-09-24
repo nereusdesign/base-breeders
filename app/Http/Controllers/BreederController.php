@@ -13,6 +13,8 @@ use App\User;
 use App\Breed;
 use App\Account;
 use App\File;
+use App\Listing;
+use App\listingPictures;
 
 
 class BreederController extends Controller
@@ -26,16 +28,28 @@ class BreederController extends Controller
   }
 
       $pic = \App\breederPictures::where('breeder_id',$info->id)->get();
+      $viewable = array();
       if(!empty($pic)){
         foreach($pic as $p){
           if ($p->isMain == '1') {
             $mainpic = 'storage/'.$p->filename;
+          }else{
+            $viewable[$p->id] = 'storage/'.$p->filename;
           }
         }
       }
       if(($mainpic == null) || (!file_exists($mainpic))){
         $mainpic = 'storage/photos/default.jpg';
       }
+
+
+      $alllistings = array();
+      $listingpics = array();
+      $alllistings = \App\Listing::where('breeder_id',$info->id)->get();
+      foreach($alllistings as $l){
+        $listingpics[] = \App\listingPictures::where('listing_id',$l->id)->get();
+      }
+
       $canEdit = FALSE;
       $dogarr = array();
       $catarr = array();
@@ -47,16 +61,22 @@ class BreederController extends Controller
         }
       }
 
-      return view('breeder-listing',['dogarr' => $dogarr,'catarr' => $catarr,'info' => $info,'pic' => $pic,'canEdit' => $canEdit,'mainpic' => $mainpic,'thisurl' => $url]);
+      return view('breeder-listing',['dogarr' => $dogarr,'catarr' => $catarr,'info' => $info,'pic' => $viewable,'canEdit' => $canEdit,'mainpic' => $mainpic,'thisurl' => $url,'listings' => $alllistings,'listingpics' => $listingpics]);
 
   }
 
     public function viewYourListings(){
       if(Auth::check()){
           if(Auth::user()->accountActive == '1'){
+            $already = array();
             $dogarr = \App\Breed::where('breedType','dog')->orderBy('breedName')->pluck('breedName','id');
             $catarr = \App\Breed::where('breedType','cat')->orderBy('breedName')->pluck('breedName','id');
-            return view('listings-dashboard',['dogarr' => $dogarr,'catarr' => $catarr]);
+            $current = \App\Breeder::where('userId',Auth::user()->id)->select('breeders.*','breeds.id as bid','breeds.breedName','breeds.breedType')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->get();
+
+            foreach ($current as $value) {
+              $already[] = $value->id;
+            }
+            return view('listings-dashboard',['dogarr' => $dogarr,'catarr' => $catarr,'already' => $already,'current' => $current]);
           }else{
             Session::flash('status', 'You must activate your account before you can create a listing.');
             return redirect()->route('checkout');

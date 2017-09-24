@@ -17,7 +17,7 @@
           <b-tab-item label="Post Kennel/Cattery To Directoy">
               <h1>Create Breed Directory Listing</h1>
 
-              <form action="{{route('directory-add')}}" method="POST" role="form" enctype="multipart/form-data">
+              <form action="{{route('directory-add')}}" method="POST" role="form" style="margin-bottom:33px" enctype="multipart/form-data">
                 {{csrf_field()}}
 
                 <div class="field">
@@ -85,12 +85,16 @@
                             <option>-- Select A Breed --</option>
                              <optgroup label="Dogs">
                              @foreach($dogarr as $dogid => $dog)
-                               <option value="{{ $dogid }}">{{ $dog }}</option>
+                                @if (!in_array($dogid, $already))
+                                  <option value="{{ $dogid }}">{{ $dog }}</option>
+                                @endif
                              @endforeach
                              </optgroup>
                              <optgroup label="Cats">
                              @foreach($catarr as $catid => $cat)
+                               @if (!in_array($catid, $already))
                                <option value="{{ $catid }}">{{ $cat }}</option>
+                               @endif
                              @endforeach
                              </optgroup>
                           </select>
@@ -135,12 +139,39 @@
           </b-tab-item>
 
           <b-tab-item label="Post Available Dog/Cat">
-              <h1>Available</h1>
+              <h1>List Available/For Sale</h1>
+              <p>Select a breed you wish to list for. In order to list under that breed you must have already created a listing in the breeder directory for that breed. Below you find a list of the breeds for which you have created breeder listings</p>
+
+              <hr class="m-t-0">
+
+              <div class="card">
+                <div class="card-content">
+                  <table class="table is-narrow">
+                    <thead>
+                      <tr>
+                        <th>Dog/Cat</th>
+                        <th>Breed</th>
+                        <th>Date Created</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      @foreach ($current as $listin)
+                        <tr>
+                          <th>{{$listin->breedType}}</th>
+                          <td>{{$listin->breedName}}</td>
+                          <td>{{$listin->created_at->toFormattedDateString()}}</td>
+                          <td class="has-text-right"><a class="button is-light" href="{{route('add-available',['url' => $listin->url])}}">Add For Sale</a></td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
           </b-tab-item>
 
-          <b-tab-item label="Messages">
-              <h1>Messages</h1>
-          </b-tab-item>
+
       </b-tabs>
   </section>
 

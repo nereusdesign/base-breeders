@@ -21,6 +21,13 @@ class UploadRequest extends FormRequest
       }
     }
 
+    protected function prepareForValidation() {
+      if(!empty($this['phone'])){
+
+      }
+        $this['phone'] = preg_replace("/[^0-9,.]/", "", $this['phone'] );
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
