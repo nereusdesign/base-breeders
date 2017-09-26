@@ -163,25 +163,29 @@ blockquote em{
                     </div>
                     <div class="column">
                       <div>
-                        <div><label>Breed</label></div>
+                        <div><label class="is-bold">Breed</label></div>
                         <div class="m-l-5">{{ $info->breedName }}</div>
 
-                        <div><label>Birth/Due Date</div>
+                        <div><label class="is-bold">Birth/Due Date</div>
                         <div class="m-l-5">{{ $listing->DOB }}</div>
 
-                        <div><label>Number Available</label></div>
-                        <div>{{ $listing->numberAvailable }}</div>
+                        <div><label class="is-bold">Number Available</label></div>
+                        <div>@if ($listing->numberAvailable < 0)
+                          Unknown
+                        @else
+                          {{$listing->numberAvailable}}
+                        @endif</div>
 
                       </div>
                     </div>
                     <div class="column">
                         <div><label>About</label></div>
-                        <div class="m-l-5">{{ $listing->about }}</div>
+                        <div class="m-l-5">{!! $listing->about !!}</div>
                     </div>
 
                  </div>
                  @if ($canEdit)
-                   <form method="POST" action="{{route('remove-listing')}}" onsubmit="return confirm('Do you really want to delete this picture?');">
+                   <form method="POST" action="{{route('remove-listing')}}" onsubmit="return confirm('Do you really want to delete this listing?');">
                      {{csrf_field()}}
                      <input type="hidden" name="list" value="{{$listing->id}}">
                      <input type="hidden" name="baseurl" value="{{$info->baseUrl}}">

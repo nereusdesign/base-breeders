@@ -68,7 +68,7 @@ class SearchController extends Controller
                   $picture[$bid] = 'storage/photos/default.jpg';
                 }
               }
-                return view('search-results',['hasresults' => '1','info' => $breeddetails,'breeders' => $breeders,'pictures' => $picture]);
+                return view('search-results',['hasresults' => '1','info' => $breeddetails,'breeders' => $breeders,'pictures' => $picture,'breed' => $breeddetails]);
           }else{
             return redirect()->route('listingremoved');
           }

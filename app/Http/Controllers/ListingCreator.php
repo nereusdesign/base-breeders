@@ -301,10 +301,10 @@ class ListingCreator extends Controller
     public function removeListing(Request $request){
       if(Auth::check()){
         if(Auth::user()->hasRole(['superadministrator', 'administrator'])){
-          DB::table('listings')->where('id',$request->img)->delete();
+          DB::table('listings')->where('id',$request->list)->delete();
         }else{
           $userid = Auth::id();
-          DB::table('listings')->where('id',$request->img)->where('userId',$userid)->delete();
+          $test = DB::table('listings')->where('id',$request->list)->where('userId',$userid)->delete();
         }
         Session::flash('success', 'Listing updated.');
         return redirect()->route('view-breeder',['url' => $request->baseurl]);

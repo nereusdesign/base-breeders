@@ -88,7 +88,7 @@ class BreederController extends Controller
             $current = \App\Breeder::where('userId',Auth::user()->id)->select('breeders.*','breeds.id as bid','breeds.breedName','breeds.breedType')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->get();
 
             foreach ($current as $value) {
-              $already[] = $value->id;
+              $already[] = $value->breedId;
             }
             return view('listings-dashboard',['dogarr' => $dogarr,'catarr' => $catarr,'already' => $already,'current' => $current]);
           }else{
