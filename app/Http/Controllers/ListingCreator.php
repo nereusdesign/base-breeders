@@ -276,16 +276,41 @@ class ListingCreator extends Controller
        return redirect()->route('member-only');
      }
 
+    }
 
+    public function removeImage (Request $request){
+      if(Auth::check()){
+        if(Auth::user()->hasRole(['superadministrator', 'administrator'])){
+          DB::table('breeder_pictures')->where('id',$request->img)->delete();
+        }else{
+          $userid = Auth::id();
+          $listing = \App\Breeder::where('id', $request->lid)->where('userId','=',$userid)->first();
+          if(count($listing) == '1'){
+            DB::table('breeder_pictures')->where('id',$request->img)->where('breeder_id',$listing->id)->delete();
+          }else{
+            return redirect()->route('listingremoved');
+          }
+        }
+        Session::flash('success', 'Listing updated.');
+        return redirect()->route('view-breeder',['url' => $request->baseurl]);
+      }else{
+        return redirect()->route('member-only');
+      }
+    }
 
-
-
-
-
-
-
-
-
+    public function removeListing(Request $request){
+      if(Auth::check()){
+        if(Auth::user()->hasRole(['superadministrator', 'administrator'])){
+          DB::table('listings')->where('id',$request->img)->delete();
+        }else{
+          $userid = Auth::id();
+          DB::table('listings')->where('id',$request->img)->where('userId',$userid)->delete();
+        }
+        Session::flash('success', 'Listing updated.');
+        return redirect()->route('view-breeder',['url' => $request->baseurl]);
+      }else{
+        return redirect()->route('member-only');
+      }
     }
 
 

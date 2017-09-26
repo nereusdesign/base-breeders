@@ -94,24 +94,6 @@
     </div>
   </section>
 
-
-  <section>
-    <div class="hero-body">
-      <div class="container">
-        <h2 class="subtitle">Newest Dog &amp; Cat Pictures</h2>
-        <div class="columns is-multiline is-centered m-t-10">
-          @foreach ($pictures as $picture)
-
-            <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd m-l-10 m-r-10 m-t-10 m-b-10" style="background-color: #efefef;"><div class="card-image"><figure class="image is-4by3"><img src="{{asset('storage/'.$picture->filename)}}" alt="Dog and Cat Pictures" style="width: auto;margin-right: auto;margin-left: auto;"></figure></div></div>
-
-
-          @endforeach
-
-
-        </div>
-      </div>
-    </div>
-  </section>
 @endsection
 
 @section('scripts')

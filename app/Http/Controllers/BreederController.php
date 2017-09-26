@@ -44,10 +44,24 @@ class BreederController extends Controller
 
 
       $alllistings = array();
+      $lp = null;
       $listingpics = array();
+
       $alllistings = \App\Listing::where('breeder_id',$info->id)->get();
       foreach($alllistings as $l){
-        $listingpics[] = \App\listingPictures::where('listing_id',$l->id)->get();
+        $lp = \App\listingPictures::where('listing_id',$l->id)->get();
+        if(!empty($lp)){
+          foreach($lp as $p){
+            if ($p->isMain == '1') {
+              $listingpics[$p->listing_id] = 'storage/'.$p->filename;
+            }else{
+              $listingpics[$p->listing_id] = 'storage/photos/default.jpg';
+            }
+            if(($listingpics[$p->listing_id] == null) || (!file_exists($listingpics[$p->listing_id]))){
+              $listingpics[$p->listing_id] = 'storage/photos/default.jpg';
+            }
+          }
+        }
       }
 
       $canEdit = FALSE;

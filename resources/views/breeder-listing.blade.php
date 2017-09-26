@@ -154,14 +154,43 @@ blockquote em{
 
 
 
-                <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd m-l-10 m-r-10 m-t-10 m-b-10" style="background-color:red">
+                <div class="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-full-hd m-l-10 m-r-10 m-t-10 m-b-10" style="background-color:#efefef">
                   <div class="card-image">
-                   <figure class="image is-4by3">
-                     <img src="https://placehold.it/1280x960" alt="Image">
-                   </figure>
+                    <div class="column">
+                      <figure class="image is-4by3">
+                        <img src="{{asset($listingpics[$listing->id])}}" alt="Image">
+                      </figure>
+                    </div>
+                    <div class="column">
+                      <div>
+                        <div><label>Breed</label></div>
+                        <div class="m-l-5">{{ $info->breedName }}</div>
+
+                        <div><label>Birth/Due Date</div>
+                        <div class="m-l-5">{{ $listing->DOB }}</div>
+
+                        <div><label>Number Available</label></div>
+                        <div>{{ $listing->numberAvailable }}</div>
+
+                      </div>
+                    </div>
+                    <div class="column">
+                        <div><label>About</label></div>
+                        <div class="m-l-5">{{ $listing->about }}</div>
+                    </div>
+
                  </div>
+                 @if ($canEdit)
+                   <form method="POST" action="{{route('remove-listing')}}" onsubmit="return confirm('Do you really want to delete this picture?');">
+                     {{csrf_field()}}
+                     <input type="hidden" name="list" value="{{$listing->id}}">
+                     <input type="hidden" name="baseurl" value="{{$info->baseUrl}}">
+                    <input type="submit" class="button is-fullwidth is-outline is-danger m-t-10" value="Remove">
+                   </form>
+                @endif
                 </div>
               @endforeach
+
 
             </div>
 
@@ -185,9 +214,11 @@ blockquote em{
                    </div>
                    <footer class="card-footer">
                      @if ($canEdit)
-                       <form method="POST" action="" onsubmit="return confirm('Do you really want to delete this picture?');">
+                       <form method="POST" action="{{route('remove-image')}}" onsubmit="return confirm('Do you really want to delete this picture?');">
                          {{csrf_field()}}
                          <input type="hidden" name="img" value="{{$key}}">
+                         <input type="hidden" name="baseurl" value="{{$info->baseUrl}}">
+                         <input type="hidden" name="lid" value="{{$info->id}}">
                         <input type="submit" class="button is-fullwidth is-outline is-danger m-t-10" value="Remove">
                        </form>
                     @endif

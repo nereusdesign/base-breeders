@@ -133,4 +133,8 @@ class SearchController extends Controller
       }
     }
 
+    public function findallbreeders(){
+      return redirect()->route('home');
+    }
+
 }

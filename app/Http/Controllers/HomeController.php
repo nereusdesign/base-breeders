@@ -42,7 +42,7 @@ class HomeController extends Controller
         $dogarr = \App\Breed::where('breedType','dog')->orderBy('breedName')->get();
         $catarr = \App\Breed::where('breedType','cat')->orderBy('breedName')->get();
         $featured = \App\Breeder::inRandomOrder()->select('breeders.*','zip_code.*','breeds.id as bid','breeds.url as burl','breeds.breedName','breeds.breedType')->join('zip_code', 'breeders.zipcode', '=', 'zip_code.zip_code')->join('breeds', 'breeders.breedId', '=', 'breeds.id')->limit(9)->get();
-        $pictures = \App\breederPictures::orderBy('created_at','desc')->limit(9)->get();
+
 
         $pix = null;
         $haslistings = array();
@@ -70,7 +70,7 @@ class HomeController extends Controller
           }
         }
 
-        return view('home',['mainimage' => $randomFile,'dogarr' => $dogarr,'catarr' => $catarr,'featured' => $featured,'pictures' => $pictures,'pix' => $pix,'haslistings' => $haslistings]);
+        return view('home',['mainimage' => $randomFile,'dogarr' => $dogarr,'catarr' => $catarr,'featured' => $featured,'pix' => $pix,'haslistings' => $haslistings]);
     }
 
     public function checkout(){

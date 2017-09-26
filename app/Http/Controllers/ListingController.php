@@ -100,7 +100,7 @@ class ListingController extends Controller
                 $filename = $photo->store('public/listings');
                 \App\listingPictures::create([
                     'breeder_id' => $l->id,
-                    'filename' => str_replace('public/'.'',$filename),
+                    'filename' => str_replace('public/','',$filename),
                     'isMain' => $isMain
                 ]);
                 if($isMain == '1'){

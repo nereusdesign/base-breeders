@@ -55,7 +55,6 @@ Route::get('/checkout', 'HomeController@checkout')->name('checkout');
 Route::post('/checkout', ['as' => 'checkout-post', 'uses' => 'HomeController@postOrder']);
 Route::any('/find-breeders', ['as' => 'search-for-breeders', 'uses' => 'SearchController@indexSearch']);
 
-
 //Base user account routes
 Route::get('/your-listings', 'BreederController@viewYourListings')->name('listings');
 Route::get('/add-to-directory', function () {
@@ -68,7 +67,8 @@ Route::get('/add-forSale/{url}', ['as' => 'add-available','uses' =>'ListingContr
 Route::post('/process-add-forSale',['as' =>'available.process.add','uses' => 'ListingController@processAddForSale']);
 Route::post('/message-breeder',['as' =>'message-breeder','uses' => 'MessageController@send']);
 Route::post('/update-plan',['as' => 'changePlan','uses' => 'UserController@changePlan']);
-
+Route::post('/remove-image','ListingCreator@removeImage')->name('remove-image');
+Route::post('/remove-listing','ListingCreator@removeListing')->name('remove-listing');
 
 
 Route::get('/account-settings', 'UserController@accountSettings')->name('settings');

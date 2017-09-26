@@ -8,10 +8,42 @@
 
 @section('content')
 <h1 class="title is-3 m-l-15 m-t-25 m-b-10">Manage Your Listings</h1>
+
+@if (!empty($current))
   <section class="m-t-75 m-l-50 m-r-50">
       <b-tabs type="is-toggle" v-model="activeTab">
           <b-tab-item label="Current Listings">
-              <h1>Current</h1>
+              <h1>Current Breeder Listings</h1>
+              <div class="card">
+                <div class="card-content">
+                  <table class="table is-narrow">
+                    <thead>
+                      <tr>
+                        <th>Dog/Cat</th>
+                        <th>Breed</th>
+                        <th>Date Created</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      @foreach ($current as $value)
+                        <tr>
+                          <th>{{$value->breedType}}</th>
+                          <td>{{$value->breedName}}</td>
+                          <td>{{$value->created_at->toFormattedDateString()}}</td>
+                          <td class="has-text-right"><a class="button is-light" href="{{url('/view-breeder/'.$value->baseUrl)}}">View/Edit</a></td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            @else
+              <h2 class="subtitle is-4 is-muted m-l-20"> You no have ads in the breeder directory. Choose "Post Kennel/Cattery To Directoy" To create your breeder listing.</h2>
+            @endif
+
           </b-tab-item>
 
           <b-tab-item label="Post Kennel/Cattery To Directoy">
@@ -143,6 +175,7 @@
               <p>Select a breed you wish to list for. In order to list under that breed you must have already created a listing in the breeder directory for that breed. Below you find a list of the breeds for which you have created breeder listings</p>
 
               <hr class="m-t-0">
+
 
               <div class="card">
                 <div class="card-content">
