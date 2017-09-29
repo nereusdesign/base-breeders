@@ -16,6 +16,8 @@ use App\Listing;
 use App\breederPictures;
 use App\User;
 use App\Account;
+use App\Mail\ContactUs;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -184,6 +186,26 @@ class HomeController extends Controller
         Session::flash('status', $error);
         return redirect()->route('checkout');
 
+    }
+
+    public function DNC(Request $request){
+      $this->validate($request, [
+          'email' => 'required|email',
+      ]);
+      DB::table('dnc')->insert(['email' => $request->email]);
+      Session::flash('status', "Email added to do not contact list");
+      return redirect()->route('unsubscribe');
+    }
+
+    public function contactus(Request $request){
+      $this->validate($request, [
+          'email' => 'required|email',
+      ]);
+      $mailable = new ContactUs($request);
+      $mailable->replyTo($request->email, $request->email);
+      Mail::to('message@findyourbreeder.com')->send($mailable);
+      Session::flash('status', "Thanks for contacting us. Someone will respond to your shortyly.");
+      return redirect()->route('contact');
     }
 
 }

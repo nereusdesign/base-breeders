@@ -50,10 +50,19 @@ Route::get('/cat-breeds', 'BreedsController@viewCats')->name('cat-breeds');
 Route::get('/view-breeds', 'BreedsController@view')->name('view-breeds');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/unsubscribe', function () {
+    return view('unsubscribe');
+})->name('unsubscribe');
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/checkout', 'HomeController@checkout')->name('checkout');
 Route::post('/checkout', ['as' => 'checkout-post', 'uses' => 'HomeController@postOrder']);
 Route::any('/find-breeders', ['as' => 'search-for-breeders', 'uses' => 'SearchController@indexSearch']);
+Route::post('/unsubscribe', ['as' => 'process-dnc', 'uses' => 'HomeController@DNC']);
+Route::post('/contact', ['as' => 'process-contact-us', 'uses' => 'HomeController@contactus']);
+
 
 //Base user account routes
 Route::get('/your-listings', 'BreederController@viewYourListings')->name('listings');

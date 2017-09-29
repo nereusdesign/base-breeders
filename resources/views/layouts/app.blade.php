@@ -26,6 +26,13 @@
     <div id="app">
         @yield('content')
         <div id="footer">
+          <div style="width:100%;text-align:center;margin-top:33px">
+              <a href="/contact" class="is-primary is-size-6"><i class="fa fa-envelope" aria-hidden="true"></i>
+Contact Us</a>
+              <div style="width:100%;text-align:center;color:#797979;font-size:11px;font-family:verenda;margin-top:5px;">
+Copyright © 2016 <a href="http://www.nereusdesign.com" style="color:#003366;font-size:11px;font-family:verenda" target="_blank">Nereus Design, LLC</a>
+</div>
+          </div>
         </div>
     </div>
 
